@@ -1,0 +1,46 @@
+﻿
+
+@model CreateArticleVM
+
+
+<div class="row">
+    <div class="card col-md-8 offset-2">
+        <div class="card-body">
+            <div class="card-text">MAKALE EKLEME PANELİ</div>
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="form-control" type="text" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content"></label>
+                    <textarea rows="20" cols="30" asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Image"></label>
+                    <input asp-for="Image" class="form-control" type="file" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryID"></label>
+                    <select asp-for="CategoryID">
+                        @foreach (var item in Model.Categories)
+                       {
+                           <option value="@item.ID" > @item.Name</option>
+                       }
+                    </select>
+                    <span asp-validation-for="CategoryID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="AppUserID" class="form-control" type="hidden" />
+                </div>
+
+                <div class="form-group">
+                    <input value="Oluştur" class="btn btn-info" type="submit" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
