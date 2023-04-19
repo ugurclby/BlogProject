@@ -20,10 +20,10 @@ namespace Blog.Web.Areas.Member.Models.VMs
         public string Content { get; set; }
 
         [NotMapped]    // buu alanı kolon olarak işaretleme
-        [Required(ErrorMessage = "Fotoğraf seçmelisiniz !")]
+        //[Required(ErrorMessage = "Fotoğraf seçmelisiniz !")]
         public IFormFile Image { get; set; }
 
-
+        public string ImagePath { get; set; }
         // CATEGORY
 
         [Required(ErrorMessage = "Kategori seçmelisiniz.")]

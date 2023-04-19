@@ -16,7 +16,9 @@ namespace Blog.Model.TypeConfigurations.Concrete
             builder.Property(a => a.Title).IsRequired(true);
             builder.Property(a => a.Content).IsRequired(true);
 
-            builder.HasOne(a => a.Category).WithMany(a => a.Articles).HasForeignKey(a => a.CategoryID).OnDelete(DeleteBehavior.Restrict);
+            //builder.HasOne(a => a.Category).WithMany(a => a.Articles).HasForeignKey(a => a.CategoryID).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(a => a.ArticleCategories).WithOne(b => b.Article).HasForeignKey(c => c.ArticleID).OnDelete(DeleteBehavior.Restrict); ;
 
             builder.HasOne(a => a.Appuser).WithMany(a => a.Articles).HasForeignKey(a => a.AppUserID).OnDelete(DeleteBehavior.Restrict);
 

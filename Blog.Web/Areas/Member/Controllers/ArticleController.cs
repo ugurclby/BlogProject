@@ -12,6 +12,8 @@ using SixLabors.ImageSharp.Processing;
 using System;
 using Microsoft.EntityFrameworkCore;
 using Blog.Model.Entities.Enums;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Blog.Web.Areas.Member.Controllers
 {
@@ -56,7 +58,8 @@ namespace Blog.Web.Areas.Member.Controllers
             {
                  Article article=_mapper.Map<Article>(vm);
 
-                using var image = Image.Load(vm.Image.OpenReadStream());
+                using var image = Image.Load(vm.Image.OpenReadStream()); 
+
                 image.Mutate(a => a.Resize(80, 80));
                 Guid guid = Guid.NewGuid();
                 image.Save($"wwwroot/images/{guid}.jpg");
@@ -65,7 +68,15 @@ namespace Blog.Web.Areas.Member.Controllers
                 _articleRepository.Create(article);
                 return RedirectToAction("List");
             }
+
             // toDo:vm nesnesi üzerinde doldurulması greken alanlar var. aksi takdirde category seçimi yapılamaz.
+            
+            vm.Categories = _categoryRepository.GetByDefaults
+            (
+                selector: a => new GetCategoryDTO() {ID = a.ID, Name = a.Name},
+                expression: a => a.Statu != Statu.Passive
+            );
+
             return View(vm);
         }
 
@@ -73,14 +84,14 @@ namespace Blog.Web.Areas.Member.Controllers
         {
             Appuser appuser =await  _userManager.GetUserAsync(User);
 
-            var list = _articleRepository.GetByDefaults
-                (
-                    selector: a => new GetArticleDTO() { ArticleID=a.ID, CategoryName=a.Category.Name, ImagePath=a.ImagePath, Title=a.Title},
-                    expression: a=>a.Statu!=Statu.Passive && a.AppUserID==appuser.Id,
-                    include: a=> a.Include(a=>a.Category)
+            //var list = _articleRepository.GetByDefaults
+            //    (
+            //        selector: a => new GetArticleDTO() { ArticleID=a.ID, CategoryName=a. Category.Name, ImagePath=a.ImagePath, Title=a.Title},
+            //        expression: a=>a.Statu!=Statu.Passive && a.AppUserID==appuser.Id,
+            //        include: a=> a.Include(a=>a.Category)
                 
-                );
-            return View(list);
+            //    );
+            return View(/*list*/);
         }
 
 
@@ -89,7 +100,7 @@ namespace Blog.Web.Areas.Member.Controllers
             Article article = _articleRepository.GetDefault(a => a.ID == id);
 
             var updatedArticle = _mapper.Map<UpdateArticleVM>(article);
-
+            
             updatedArticle.Categories = _categoryRepository.GetByDefaults
                 (selector: a=> new GetCategoryDTO() { ID=a.ID, Name=a.Name},
                 expression: a=>a.Statu!=Statu.Passive);
@@ -104,21 +115,33 @@ namespace Blog.Web.Areas.Member.Controllers
             {
                 var article = _mapper.Map<Article>(vm);
 
-                using var image = Image.Load(vm.Image.OpenReadStream());
-                image.Mutate(a=>a.Resize(80,80));
+                if (vm.Image != null)
+                {
+                    using var image = Image.Load(vm.Image.OpenReadStream());
+                    image.Mutate(a => a.Resize(80, 80));
 
-                Guid guid = Guid.NewGuid();
-                image.Save($"wwwroot/images/{guid}.jpeg");
+                    Guid guid = Guid.NewGuid();
+                    image.Save($"wwwroot/images/{guid}.jpeg");
 
-                article.ImagePath = $"/images/{guid}.jpeg";
+                    article.ImagePath = $"/images/{guid}.jpeg";
+
+                    System.IO.File.Delete($"wwwroot/{vm.ImagePath}");
+
+                }  
 
                 _articleRepository.Update(article);
                 return RedirectToAction("List");
 
             }
+
             // todo: categories listesi null geleceği için category nesnelerini viewa taşıyaıyoruz ??
             // todo : makale fotoğrafı güncellenmezse ?
             // todo: makale fotoğrafı güncellenirse wwwroot alıntında bu makaleya ait fotoğrafı silsek ve yerine bu güncel fotoğrafı yerleştirmiş olalım ki images klasörü de gittikçe kalabalıklaşmasın.
+            
+            vm.Categories = _categoryRepository.GetByDefaults
+            (selector: a => new GetCategoryDTO() { ID = a.ID, Name = a.Name },
+                expression: a => a.Statu != Statu.Passive);
+
             return View(vm);
         }
 

@@ -27,9 +27,9 @@ namespace Blog.Model.Entities.Concrete
 
         // 1 kategorisi vardır.
 
-        public int CategoryID { get; set; }
+        //public int CategoryID { get; set; } Hoca
 
-        public Category  Category { get; set; }
+        //public Category  Category { get; set; } Hoca
 
 
         // 1 makalenin 1 yazarı 
@@ -43,5 +43,7 @@ namespace Blog.Model.Entities.Concrete
 
         public List<Comment>  Comments { get; set; }
 
+        // Makale ile kategori arasında çoktan çoğa ilişki kurmak için
+        public List<ArticleCategory> ArticleCategories { get; set; }
     }
 }

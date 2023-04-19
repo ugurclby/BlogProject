@@ -15,6 +15,7 @@ namespace Blog.Dal.Context
 
         public DbSet<Article>  Articles { get; set; }
         public DbSet<Category>  Categories { get; set; }
+        public DbSet<ArticleCategory> ArticleCategories{ get; set; }
         public DbSet<Appuser>  Appusers { get; set; }
         public DbSet<Like>  Likes { get; set; }
         public DbSet<Comment>  Comments { get; set; }
@@ -25,10 +26,13 @@ namespace Blog.Dal.Context
         {
             builder.ApplyConfiguration(new ArticleMap());
             builder.ApplyConfiguration(new AppUserMap());
+            builder.ApplyConfiguration(new ArticleCategoryMap());
             builder.ApplyConfiguration(new  CommentMap());
             builder.ApplyConfiguration(new IdentityRoleMap());
             builder.ApplyConfiguration(new LikeMap());
             builder.ApplyConfiguration(new UserFollowedCategoryMap());
+            builder.ApplyConfiguration(new CategoryMap()); 
+
             base.OnModelCreating(builder);
         }
 

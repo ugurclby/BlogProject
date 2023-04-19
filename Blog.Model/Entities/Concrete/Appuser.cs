@@ -18,7 +18,7 @@ namespace Blog.Model.Entities.Concrete
             UserFollowedCategories = new List<UserFollowedCategory>();
         }
 
-      //  public string ID { get; set; }
+       //  public string ID { get; set; }
 
         private DateTime _createdDate = DateTime.Now;
 
@@ -29,7 +29,7 @@ namespace Blog.Model.Entities.Concrete
         }
 
 
-        private Statu _statu = Statu.Active;
+        private Statu _statu = Statu.Confirmation;
 
         public Statu Statu
         {
@@ -63,8 +63,7 @@ namespace Blog.Model.Entities.Concrete
 
         public List<Comment> Comments { get; set; }
 
-        public List<UserFollowedCategory> UserFollowedCategories { get; set; }
-
+        public List<UserFollowedCategory> UserFollowedCategories { get; set; } 
 
     }
 }

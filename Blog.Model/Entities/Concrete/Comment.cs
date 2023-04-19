@@ -20,5 +20,6 @@ namespace Blog.Model.Entities.Concrete
         public Article  Article { get; set; }
 
 
+
     }
 }

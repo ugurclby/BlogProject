@@ -12,6 +12,7 @@ namespace Blog.Model.TypeConfigurations.Concrete
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {
             builder.HasData(new IdentityRole { Id = Guid.NewGuid().ToString(), Name = "Member", NormalizedName = "MEMBER" });
+            builder.HasData(new IdentityRole { Id = Guid.NewGuid().ToString(), Name = "Admin", NormalizedName = "ADMIN" });
         }
     }
 }

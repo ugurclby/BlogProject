@@ -6,7 +6,8 @@ namespace Blog.Model.Entities.Enums
 {
     public enum Statu
     {
-        Active=1,
+        Confirmation=0, 
+        Active,
         Modified,
         Passive
     }
