@@ -84,14 +84,14 @@ namespace Blog.Web.Areas.Member.Controllers
         {
             Appuser appuser =await  _userManager.GetUserAsync(User);
 
-            //var list = _articleRepository.GetByDefaults
-            //    (
-            //        selector: a => new GetArticleDTO() { ArticleID=a.ID, CategoryName=a. Category.Name, ImagePath=a.ImagePath, Title=a.Title},
-            //        expression: a=>a.Statu!=Statu.Passive && a.AppUserID==appuser.Id,
-            //        include: a=> a.Include(a=>a.Category)
-                
-            //    );
-            return View(/*list*/);
+            var list = _articleRepository.GetByDefaults
+                (
+                    selector: a => new GetArticleDTO() { ArticleID = a.ID, ImagePath = a.ImagePath, Title = a.Title },
+                    expression: a => a.Statu != Statu.Passive && a.AppUserID == appuser.Id,
+                    include: a => a.Include(a => a.ArticleCategories)
+
+                );
+            return View(list);
         }
 
 

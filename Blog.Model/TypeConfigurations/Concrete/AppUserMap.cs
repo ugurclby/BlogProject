@@ -15,9 +15,7 @@ namespace Blog.Model.TypeConfigurations.Concrete
         {
             builder.Property(a => a.LastName).IsRequired(true);
             builder.Property(a => a.FirstName).IsRequired(true);
- 
-            // Uygulamada tek bir admin kullanıcısı olacağı için db oluşturulurken admin kullanıcısı ile birlikte oluşur.
-            builder.HasData(new Appuser { Id = Guid.NewGuid().ToString(),FirstName = "admin",LastName = "admin",Password = "12345",Statu = Statu.Active});
+  
         }
     }
 }

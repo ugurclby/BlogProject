@@ -31,7 +31,7 @@ namespace Blog.Web
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ProjectContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<ProjectContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default"),o=> o.CommandTimeout(9999999)));
 
             services.AddIdentity<Appuser, IdentityRole>
                 (
@@ -54,6 +54,7 @@ namespace Blog.Web
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<IAboutRepository, AboutRepository>();
 
             services.AddAuthentication();
         }

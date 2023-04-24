@@ -10,11 +10,13 @@ namespace Blog.Web.Models.AutoMappers
     {
         public Mappers()
         {
-            CreateMap<RegisterDTO, Appuser>();
+            CreateMap<RegisterDTO, Appuser>().ReverseMap();
+            CreateMap<RegisterUpdateDTO, Appuser>().ReverseMap(); 
             CreateMap<CreateCategoryDTO, Category>();
             CreateMap<UpdateCategoryDTO, Category>().ReverseMap();
             CreateMap<CreateArticleVM, Article>();
             CreateMap<UpdateArticleVM,Article>().ReverseMap();
+            CreateMap<AboutDTO, About>();
         }
     }
 }

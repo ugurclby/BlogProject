@@ -62,21 +62,12 @@ namespace Blog.Web.Controllers
                 if(appuser!=null)
                 {
                     SignInResult result =await _signInManager.PasswordSignInAsync(appuser.UserName,dto.Password,false,false);
-                    if (result.Succeeded) return Redirect(dto.ReturnUrl ?? "/member/appuser/index");
-
+                    if (result.Succeeded) 
+                        return Redirect(dto.ReturnUrl ?? "/member/appuser/index");  
+                    ModelState.AddModelError("","Girmiş olduğunuz bilgiler hatalı.");
                 }
             }
             return View(dto);
-        }
-
-
-
-
-
-
-
-
-
-
+        } 
     }
 }

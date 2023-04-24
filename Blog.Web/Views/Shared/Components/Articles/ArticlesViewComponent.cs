@@ -19,7 +19,7 @@ namespace Blog.Web.Views.Shared.Components.Articles
             _articleRepository = articleRepository;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string categoryId)
         {
             List<GetArticleWithUser> list = _articleRepository.GetByDefaults
                 (

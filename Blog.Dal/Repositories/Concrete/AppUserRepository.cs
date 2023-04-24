@@ -37,10 +37,12 @@ namespace Blog.Dal.Repositories.Concrete
             _projectContext.SaveChanges();
         }
 
-        public void Update(Appuser appuser)
+        public  void Update (Appuser appuser)
         {
             appuser.Statu = Model.Entities.Enums.Statu.Modified;
-            // todo: usermanager.update ??
+            // todo: usermanager.update ?? 
+            //_projectContext.Appusers.Update(appuser);
+            //var result = await _userManager.UpdateAsync(appuser);
             _table.Update(appuser);
             _projectContext.SaveChanges();
         }
