@@ -31,5 +31,9 @@ namespace Blog.Web.Areas.Member.Models
 
         [DisplayName("Geçerli Fotoğraf")]
         public string ImagePath { get; set; }
+        
+
+        [NotMapped]
+        public string DmlType { get; set; }
     }
 }

@@ -23,6 +23,8 @@ namespace Blog.Dal.Context
         public DbSet<Comment> Comments { get; set; }
         public DbSet<About> Abouts { get; set; }
         public DbSet<UserFollowedCategory> UserFollowedCategories { get; set; }
+        public DbSet<UsedPassword> UsedPasswords { get; set; }
+        
 
 
         protected override void OnModelCreating(ModelBuilder builder)
