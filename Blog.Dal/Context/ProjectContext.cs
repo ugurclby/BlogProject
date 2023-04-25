@@ -67,7 +67,8 @@ namespace Blog.Dal.Context
                 UserName = "admin@gmail.com",
                 NormalizedUserName = "ADMIN@GMAIL.COM",
                 Statu = Statu.Active,
-                NormalizedEmail = "ADMIN@GMAIL.COM"
+                NormalizedEmail = "ADMIN@GMAIL.COM",
+                Password = "admin123"
             };
 
             //admin şifresi verilir

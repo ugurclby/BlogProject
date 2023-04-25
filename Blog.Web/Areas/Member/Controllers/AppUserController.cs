@@ -11,10 +11,13 @@ using Blog.Dal.Repositories.Concrete;
 using Blog.Web.Areas.Member.Models;
 using System.Linq;
 using Blog.Model.Entities.Enums;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Blog.Web.Areas.Member.Controllers
 {
     [Area("Member")]
+    [Authorize(Roles = "member")]
     public class AppUserController : Controller
     {
         private readonly SignInManager<Appuser> _signInManager;

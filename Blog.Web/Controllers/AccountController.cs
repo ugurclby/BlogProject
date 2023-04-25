@@ -84,7 +84,7 @@ namespace Blog.Web.Controllers
                     {
                         var roles = await _userManager.GetRolesAsync(appuser);
 
-                        if (roles.Contains("Admin"))
+                        if (roles.Contains("admin"))
                         {
                             return Redirect(dto.ReturnUrl ?? "/admin/appuser/index");
                         }

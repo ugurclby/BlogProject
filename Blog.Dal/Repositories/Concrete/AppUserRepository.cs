@@ -42,7 +42,7 @@ namespace Blog.Dal.Repositories.Concrete
                 }
                 return errors;
             }
-            await _userManager.AddToRoleAsync(appuser, "Member"); 
+            await _userManager.AddToRoleAsync(appuser, "member"); 
             await _projectContext.SaveChangesAsync();
             return errors;
         }

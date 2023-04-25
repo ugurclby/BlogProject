@@ -11,9 +11,13 @@ using Blog.Dal.Repositories.Concrete;
 using Blog.Web.Areas.Admin.Models;
 using System.Linq;
 using Blog.Model.Entities.Enums;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using System.IO;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class AppUserController : Controller
     {
