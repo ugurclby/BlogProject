@@ -15,7 +15,7 @@ namespace Blog.Dal.Repositories.Interfaces.Concrete
 
         int Update(Appuser appuser);
 
-
+        List<Appuser> OnayBekleyenKullaniciListesi();
 
     }
 }

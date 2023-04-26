@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.Model.Entities.Enums;
 
 namespace Blog.Dal.Repositories.Concrete
 {
@@ -21,8 +22,7 @@ namespace Blog.Dal.Repositories.Concrete
         {
             _userManager = userManager;
             _projectContext = projectContext;
-            _table = _projectContext.Set<Appuser>();
-
+            _table = _projectContext.Set<Appuser>(); 
         }
 
         public async Task<List<string>> Create(Appuser appuser)
@@ -66,6 +66,15 @@ namespace Blog.Dal.Repositories.Concrete
             appuser.Statu = Model.Entities.Enums.Statu.Modified;
             _table.Update(appuser);
             return _projectContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Onay Bekleyen Kullanıcıları Veren Metod
+        /// </summary>
+        /// <returns></returns>
+        public List<Appuser> OnayBekleyenKullaniciListesi()
+        {
+            return _table.Where(x => x.Statu == Statu.Confirmation).ToList(); 
         }
     }
 }

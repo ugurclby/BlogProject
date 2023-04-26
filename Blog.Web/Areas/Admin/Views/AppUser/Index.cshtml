@@ -1,6 +1,70 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row mt-3"> 
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card text-white text-center bg-primary mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Onay Bekleyen Kullanıcılar</h4> 
+                    @if (ViewBag.Onay_Bekleyen_Kullanici > 0)
+                    {
+                        <p class="card-text display-4">@ViewBag.Onay_Bekleyen_Kullanici</p>
+                        <p class="">
+                            <a asp-area="Admin" asp-action="ConfirmationUserList" asp-controller="AppUser" class="btn btn-light btn-sm"><i class="fas fa-chevron-circle-right"></i> İncele</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="card-text lead">
+                            Onay Bekleyen Kullanıcı Bulunmamaktadır.
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white text-center bg-primary mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Onay Bekleyen Kategoriler</h4>
 
+                    @if (1 > 0)
+                    {
+                        <p class="card-text display-4">1 @*@ViewBag.OkunmamisBildirimSayisi*@</p>
+                        <p class="">
+                            <a asp-action="Index" asp-controller="AppUser" class="btn btn-light btn-sm"><i class="fas fa-chevron-circle-right"></i> İncele</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="card-text lead">
+                            Onay Bekleyen Kategori Bulunmamaktadır.
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white text-center bg-primary mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Onay Bekleyen Makaleler</h4>
 
-
-    @await Component.InvokeAsync("Articles")
-
+                    @if (1 > 0)
+                    {
+                        <p class="card-text display-4">1 @*@ViewBag.OkunmamisBildirimSayisi*@</p>
+                        <p class="">
+                            <a asp-action="Index" asp-controller="AppUser" class="btn btn-light btn-sm"><i class="fas fa-chevron-circle-right"></i> İncele</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="card-text lead">
+                            Onay Bekleyen Makale Bulunmamaktadır.
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>

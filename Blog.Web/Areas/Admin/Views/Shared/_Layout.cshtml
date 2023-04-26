@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Blog.Web</title>
     <link href="~/template/startbootstrap-blog-home-gh-pages/css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" /> 
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
@@ -17,22 +17,20 @@
                         <li class="nav-item active">
                             <a class="nav-link" asp-action="Index" asp-controller="AppUser" asp-area="Admin">Ana Sayfa <span class="sr-only">(current)</span></a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="LogOut" asp-controller="AppUser" asp-area="Admin">ÇIKIŞ YAP</a>
-                        </li>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">Hakkımızda</a>
+                        </li>  
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                PROFİL
+                                Profil
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="AppUser" asp-action="Update" asp-area="Admin">Düzenle</a>
-
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                KATEGORİ
+                                Kategori
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Category" asp-action="Create" asp-area="Admin">Oluştur</a>
@@ -41,12 +39,15 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                MAKALE
+                                Makale
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Article" asp-action="Create" asp-area="Admin">Oluştur</a>
                                 <a class="dropdown-item" asp-controller="Article" asp-action="List" asp-area="Admin">Listele</a>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="LogOut" asp-controller="AppUser" asp-area="Admin">Çıkış Yap</a>
                         </li>
                     </ul>
                 </div>
@@ -61,7 +62,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - Blog.Web - <a asp-area="" asp-controller="Home" asp-action="About">Hakkımızda</a>
+            &copy; 2023 - Blog.Web
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

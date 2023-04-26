@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System.Threading.Tasks;
+using Blog.Model.Entities.Enums;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace Blog.Web.Controllers
@@ -79,9 +80,15 @@ namespace Blog.Web.Controllers
                 Appuser appuser = await _userManager.FindByEmailAsync(dto.Email);
                 if (appuser != null)
                 {
+                    if (appuser.Statu == Statu.Confirmation)
+                    {
+                        ModelState.AddModelError("", "Kullanıcı Onayınız Henüz Tamamlanmamıştır.");
+                        return View(dto);
+                    }
+
                     SignInResult result = await _signInManager.PasswordSignInAsync(appuser.UserName, dto.Password, false, false);
                     if (result.Succeeded)
-                    {
+                    { 
                         var roles = await _userManager.GetRolesAsync(appuser);
 
                         if (roles.Contains("admin"))

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Model.Entities.Concrete;
+using Blog.Web.Areas.Admin.Models;
 using Blog.Web.Areas.Member.Models;
 using Blog.Web.Areas.Member.Models.VMs;
 using Blog.Web.Models.DTOs;
@@ -11,7 +12,9 @@ namespace Blog.Web.Models.AutoMappers
         public Mappers()
         {
             CreateMap<RegisterDTO, Appuser>().ReverseMap();
-            CreateMap<RegisterUpdateDTO, Appuser>().ReverseMap(); 
+            CreateMap<UserApprovalUpdateDTO, Appuser>();
+            CreateMap<RegisterUpdateDTO, Appuser>().ReverseMap();
+            CreateMap<GetConfirmationUserListDTO, Appuser>().ReverseMap(); 
             CreateMap<CreateCategoryDTO, Category>();
             CreateMap<UpdateCategoryDTO, Category>().ReverseMap();
             CreateMap<CreateArticleVM, Article>();

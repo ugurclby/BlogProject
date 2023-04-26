@@ -18,7 +18,7 @@ namespace Blog.Model.Entities.Abstract
 		}
 
 
-		private Statu _statu=Statu.Confirmation;
+		private  Statu _statu=Statu.Confirmation;
 
 		public Statu Statu
 		{

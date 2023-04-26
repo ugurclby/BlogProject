@@ -47,13 +47,16 @@
             <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger">
 
-            </div>
+            </div> 
+
             @{
                 if (ViewBag.Message != null)
                 {
-                    <span class="badge badge-success">@ViewBag.Message </span>
+                    <div class="alert alert-success" role="alert">
+                        @ViewBag.Message
+                    </div> 
                 }
-            }
+            } 
         </form>
     </div>
 </div>

@@ -17,13 +17,12 @@
                         <li class="nav-item active">
                             <a class="nav-link" asp-action="Index" asp-controller="AppUser" asp-area="Member">Ana Sayfa <span class="sr-only">(current)</span></a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="LogOut" asp-controller="AppUser" asp-area="Member">ÇIKIŞ YAP</a>
-                        </li>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">Hakkımızda</a>
+                        </li>  
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                PROFİL
+                                Profil
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="AppUser" asp-action="Update" asp-area="Member">Düzenle</a>
@@ -32,7 +31,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                KATEGORİ
+                                KAtergori
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Category" asp-action="Create" asp-area="Member">Oluştur</a>
@@ -41,12 +40,15 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                MAKALE
+                                Makale
                             </a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="Article" asp-action="Create" asp-area="Member">Oluştur</a>
                                 <a class="dropdown-item" asp-controller="Article" asp-action="List" asp-area="Member">Listele</a>
                             </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="LogOut" asp-controller="AppUser" asp-area="Member">Çıkış Yap</a>
                         </li>
                     </ul>
                 </div>

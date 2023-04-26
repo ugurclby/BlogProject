@@ -1,0 +1,83 @@
+﻿@model List<GetConfirmationUserListDTO>
+@{
+    ViewData["Title"] = "ConfirmationUserList";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Onay Bekleyen Kullanıcı Listesi</h3> 
+ 
+    <table class="table table-sm table-hover mt-2">
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Kullanıcı Adı</th>
+            <th>Mail</th> 
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>
+                    <a asp-action="UserApproval" asp-route-id="@item.Id" class="btn btn-primary btn-sm"><i class="far fa-edit mr-2"></i>Onay</a>
+                    <a href="" data-toggle="modal" data-target="#redModal" data-id="@item.Id" class="btn btn-danger btn-sm">
+
+                        <i class="fas fa-times-circle mr-2"></i>Red
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+ 
+<!-- Modal -->
+<div class="modal fade" id="redModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Uyarı</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Reddetmek istediğinizden emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hayır</button>
+                <button id="btnSil" type="button" class="btn btn-primary">Evet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#redModal").on("show.bs.modal", function (event) {
+                let tetikleyenElement = $(event.relatedTarget);
+                let id = tetikleyenElement.data("id");
+
+                $("#btnSil").click(function () {
+                    $.ajax({
+                        type: "Get",
+                        url: "./RejectionUser",
+                        data: { id: id },
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8;",
+                        success: function () {
+                            //alert("işlem tamam");
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            alert(error.statusText);
+                        }
+                    })
+                });
+            })
+        });
+    </script>
+
+}
