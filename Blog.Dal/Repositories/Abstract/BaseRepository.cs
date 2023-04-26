@@ -69,6 +69,11 @@ namespace Blog.Dal.Repositories.Abstract
             _table.Update(entity);
             _context.SaveChanges();
         }
+        public void UpdateApproval(T entity)
+        { 
+            _table.Update(entity);
+            _context.SaveChanges();
+        }
     }
 
 }

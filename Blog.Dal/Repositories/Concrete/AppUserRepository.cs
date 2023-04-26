@@ -67,7 +67,11 @@ namespace Blog.Dal.Repositories.Concrete
             _table.Update(appuser);
             return _projectContext.SaveChanges();
         }
-
+        public int UpdateApproval(Appuser appuser)
+        {  
+            _table.Update(appuser);
+            return _projectContext.SaveChanges();
+        }
         /// <summary>
         /// Onay Bekleyen Kullanıcıları Veren Metod
         /// </summary>

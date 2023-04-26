@@ -8,9 +8,9 @@
             <div class="card text-white text-center bg-primary mb-3">
                 <div class="card-body">
                     <h4 class="card-title">Onay Bekleyen Kullanıcılar</h4> 
-                    @if (ViewBag.Onay_Bekleyen_Kullanici > 0)
+                    @if (ViewBag.OnayBekleyenKullanici > 0)
                     {
-                        <p class="card-text display-4">@ViewBag.Onay_Bekleyen_Kullanici</p>
+                        <p class="card-text display-4">@ViewBag.OnayBekleyenKullanici</p>
                         <p class="">
                             <a asp-area="Admin" asp-action="ConfirmationUserList" asp-controller="AppUser" class="btn btn-light btn-sm"><i class="fas fa-chevron-circle-right"></i> İncele</a>
                         </p>
@@ -29,11 +29,11 @@
                 <div class="card-body">
                     <h4 class="card-title">Onay Bekleyen Kategoriler</h4>
 
-                    @if (1 > 0)
+                    @if (ViewBag.OnayBekleyenKategori > 0)
                     {
-                        <p class="card-text display-4">1 @*@ViewBag.OkunmamisBildirimSayisi*@</p>
+                        <p class="card-text display-4">@ViewBag.OnayBekleyenKategori</p>
                         <p class="">
-                            <a asp-action="Index" asp-controller="AppUser" class="btn btn-light btn-sm"><i class="fas fa-chevron-circle-right"></i> İncele</a>
+                            <a asp-action="ConfirmationCategoryList" asp-controller="Category" class="btn btn-light btn-sm"><i class="fas fa-chevron-circle-right"></i> İncele</a>
                         </p>
                     }
                     else

@@ -14,11 +14,16 @@ namespace Blog.Web.Models.AutoMappers
             CreateMap<RegisterDTO, Appuser>().ReverseMap();
             CreateMap<UserApprovalUpdateDTO, Appuser>();
             CreateMap<RegisterUpdateDTO, Appuser>().ReverseMap();
+            CreateMap<AdminRegisterUpdateDTO, Appuser>().ReverseMap(); 
             CreateMap<GetConfirmationUserListDTO, Appuser>().ReverseMap(); 
+
             CreateMap<CreateCategoryDTO, Category>();
             CreateMap<UpdateCategoryDTO, Category>().ReverseMap();
+            CreateMap<GetConfirmationCategoryListDTO, Category>().ReverseMap(); 
+
             CreateMap<CreateArticleVM, Article>();
             CreateMap<UpdateArticleVM,Article>().ReverseMap();
+            
             CreateMap<AboutDTO, About>();
         }
     }

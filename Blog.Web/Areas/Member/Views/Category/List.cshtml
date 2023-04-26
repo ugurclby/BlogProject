@@ -11,8 +11,9 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>KATEGORİ AD</th>
-                        <th>OPERASYON</th>
+                        <th>Kategori Ad</th>
+                        <th>Durum</th>
+                        <th>Operasyon</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -21,6 +22,7 @@
                     {
                         <tr>
                             <td>@item.Name</td>
+                            <td>@item.StatuDescription</td>
                             <td>
                                 <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-success">Güncelle</a>
                                 <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Sil</a>

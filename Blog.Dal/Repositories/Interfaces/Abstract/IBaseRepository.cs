@@ -18,6 +18,7 @@ namespace Blog.Dal.Repositories.Interfaces.Abstract
 
         void Update(T entity);
 
+        void UpdateApproval(T entity); 
         T GetDefault(Expression<Func<T, bool>> expression);             // tek t tipini döner
 
         List<T> GetDefaults(Expression<Func<T, bool>> expression);     // expressinio sağlayan t tiplerini döner

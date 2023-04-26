@@ -14,6 +14,7 @@ namespace Blog.Dal.Repositories.Interfaces.Concrete
         void Delete(Appuser appuser);
 
         int Update(Appuser appuser);
+        int UpdateApproval(Appuser appuser); 
 
         List<Appuser> OnayBekleyenKullaniciListesi();
 
