@@ -3,35 +3,46 @@
     ViewData["Title"] = "ConfirmationUserList";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+  
+<div class="row">
+    <div class="card col-md-8 offset-2 mt-5">
+        <div class="card-body">
+            <div class="card-text">Onay Bekleyen Kullanıcı Listesi</div> 
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Soyad</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Mail</th> 
+                </tr>
+                </thead>
+                <tbody>
 
-<h3>Onay Bekleyen Kullanıcı Listesi</h3> 
- 
-    <table class="table table-sm table-hover mt-2">
-        <tr>
-            <th>Ad</th>
-            <th>Soyad</th>
-            <th>Kullanıcı Adı</th>
-            <th>Mail</th> 
-        </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <a asp-action="UserApproval" asp-route-id="@item.Id" class="btn btn-success btn-sm">Onay</a>
+                            <a href="" data-toggle="modal" data-target="#redModal" data-id="@item.Id" class="btn btn-danger btn-sm">
+                                 Red
+                            </a>
+                        </td>
+                    </tr>
+                }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.UserName</td>
-                <td>@item.Email</td>
-                <td>
-                    <a asp-action="UserApproval" asp-route-id="@item.Id" class="btn btn-primary btn-sm"><i class="far fa-edit mr-2"></i>Onay</a>
-                    <a href="" data-toggle="modal" data-target="#redModal" data-id="@item.Id" class="btn btn-danger btn-sm">
+                </tbody>
+            </table>
 
-                        <i class="fas fa-times-circle mr-2"></i>Red
-                    </a>
-                </td>
-            </tr>
-        }
-    </table>
- 
+        </div>
+    </div>
+</div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="redModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">

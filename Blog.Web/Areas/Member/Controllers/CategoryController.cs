@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Blog.Dal.Repositories.Interfaces.Concrete;
 using Blog.Model.Entities.Concrete;
 using Blog.Web.Areas.Member.Models;
@@ -7,23 +9,27 @@ using Microsoft.AspNetCore.Mvc;
 using Blog.Model.Entities.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Areas.Member.Controllers
 {
     [Area("Member")]
-    [Authorize]
+    [Authorize(Roles = "member")]
 
     public class CategoryController : Controller
     {
         private readonly IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
         private readonly UserManager<Appuser> _userManager;
+        private readonly IUserFollowedCategoryRepository _followedCategoryRepository;
 
-        public CategoryController(IMapper mapper,ICategoryRepository categoryRepository,UserManager<Appuser> userManager)
+
+        public CategoryController(IMapper mapper,ICategoryRepository categoryRepository,UserManager<Appuser> userManager, IUserFollowedCategoryRepository followedCategoryRepository)
         {
             _mapper = mapper;
             _categoryRepository = categoryRepository;
            _userManager = userManager;
+           _followedCategoryRepository = followedCategoryRepository;
         }
 
         public IActionResult Create()
@@ -43,9 +49,22 @@ namespace Blog.Web.Areas.Member.Controllers
             return View(dto);
         }
 
-        public IActionResult List()
-        {
-            var list = _categoryRepository.GetDefaults(a => a.Statu !=Statu.Passive);
+        public async Task<IActionResult> List()
+        { 
+            Appuser appuser = await _userManager.GetUserAsync(User);
+            ViewBag.UserId = appuser.Id;
+            var list = _categoryRepository.GetByDefaults<Category>
+            (
+                selector: a => new Category()
+                    {
+                        Description= a.Description,Name=  a.Name,ID= a.ID ,Statu  = a.Statu,UserFollowedCategories = a.UserFollowedCategories
+                    },
+                expression: a => a.Statu != Statu.Passive,
+                include: a => a.Include(a => a.UserFollowedCategories)
+
+            );
+             
+
             return View(list);
         }
 
@@ -69,7 +88,18 @@ namespace Blog.Web.Areas.Member.Controllers
                 return RedirectToAction("List");
             }
             return View(dto);
+        } 
+        
+        public IActionResult Delete(int id)
+        {
+            Category category = _categoryRepository.GetDefault(a => a.ID == id);
+            if (category != null)
+            { 
+                _categoryRepository.Delete(category);
+            }
+            return Json(null); 
         }
+ 
 
         public async Task<IActionResult> Follow(int id)
         {
@@ -88,6 +118,36 @@ namespace Blog.Web.Areas.Member.Controllers
             _categoryRepository.Update(category);
             return RedirectToAction("List");
         }
+
+        public async Task<IActionResult> UnFollow(int id)
+        {
+            var category = _categoryRepository.GetByDefaults<Category>
+            (
+                selector: a => new Category()
+                {
+                    Description = a.Description,
+                    Name = a.Name,
+                    ID = a.ID,
+                    Statu = a.Statu,
+                    UserFollowedCategories = a.UserFollowedCategories
+                },
+                expression: a => a.ID==id,
+                include: a => a.Include(a => a.UserFollowedCategories)
+
+            ).FirstOrDefault(); 
+
+            Appuser appuser = await _userManager.GetUserAsync(User);
+
+            if (category!=null && appuser!=null)
+            {
+                var followedCategory = category.UserFollowedCategories.FirstOrDefault(x => x.AppUserID == appuser.Id && x.CategoryID == category.ID);
+
+                _followedCategoryRepository.Delete(followedCategory);
+            }
+            
+            return RedirectToAction("List");
+        }
+        
 
         // todo : unfollow. kişi listeleme ekranındayken eğer ilgili satırdaki kategoriyi takip ediyorsa takibi bırak butonu, eğer takip etmiyosa takip et butonu olmalı ki. Duplicate key hatası engellenmeiş olsun ve kullanıcı deneyimi açıısndan başarılı olunsun.
 

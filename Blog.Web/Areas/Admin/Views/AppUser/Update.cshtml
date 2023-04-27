@@ -6,60 +6,33 @@
 @model AdminRegisterUpdateDTO
 
 <div class="row">
-    <div class="card col-md-8">
+    <div class="card col-md-8 offset-2 mt-5">
         <div class="card-text"><h2>Admin Bilgileri</h2></div>
-        <form asp-action="Update" method="post" enctype="multipart/form-data">
+        <form>
             <div class="form-group">
                 <label asp-for="FirstName"></label>
-                <input type="text" class="form-control" asp-for="FirstName" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <input type="text" class="form-control" asp-for="FirstName" disabled="disabled"/> 
             </div>
             <div class="form-group">
                 <label asp-for="LastName"></label>
-                <input type="text" class="form-control" asp-for="LastName" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <input type="text" class="form-control" asp-for="LastName" disabled="disabled" /> >
             </div>
             <div class="form-group">
                 <label asp-for="UserName"></label>
-                <input type="text" class="form-control" asp-for="UserName" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <input type="text" class="form-control" asp-for="UserName" disabled="disabled" /> >
             </div>
             <div class="form-group">
-                <label asp-for="Password"></label>
-                @*Tag helper içerisinde password type set olmuyordu. O yüzden html input a geçildi.*@
-                <input type="password" class="form-control" value="@Model.Password" name="Password" autocomplete="off" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="Password"></label> 
+                <input type="password" class="form-control" value="@Model.Password" disabled="disabled" name="Password" autocomplete="off" /> 
             </div>
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input type="text" class="form-control" asp-for="Email" autocomplete="off" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Image"></label>
-                <input type="file" class="form-control" asp-for="Image" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
+                <input type="text" class="form-control" asp-for="Email" disabled="disabled" autocomplete="off" /> 
+            </div> 
             <div class="form-group">
                 <label asp-for="ImagePath"></label>
                 <img src="@Model.ImagePath" asp-append-version="true" />
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-success" name="DmlType" value="Güncelle" /> 
-            </div>
-            <input type="hidden" asp-for="ImagePath" />
-            <input type="hidden" asp-for="Id" />
-            <div asp-validation-summary="ModelOnly" class="text-danger">
-            </div>
-
-            @{
-                if (ViewBag.Message != null)
-                {
-                    <div class="alert alert-success" role="alert">
-                        @ViewBag.Message
-                    </div>
-                }
-            }
+            </div>  
         </form>
     </div>
 </div>

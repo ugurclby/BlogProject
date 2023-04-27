@@ -5,7 +5,7 @@
 }
 @model List<GetConfirmationCategoryListDTO>
 
-<h3>Onay Bekleyen Kategori Listesi</h3>
+@*<h3>Onay Bekleyen Kategori Listesi</h3>
 
 <table class="table table-sm table-hover mt-2">
     <tr>
@@ -27,7 +27,42 @@
             </td>
         </tr>
     }
-</table>
+</table>*@
+
+<div class="row">
+    <div class="card col-md-8 offset-2 mt-5">
+        <div class="card-body">
+            <div class="card-text">Onay Bekleyen Kategori Listesi</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Kategori Adı</th>
+                        <th>Kategori Açıklama</th> 
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td> 
+                            <td>
+                                <a asp-action="CategoryApproval" asp-route-id="@item.Id" class="btn btn-success">Onay</a>
+                                <a href="" data-toggle="modal" data-target="#redModal" data-id="@item.Id" class="btn btn-danger btn-sm">
+                                     Red
+                                </a>
+                            </td>
+                        </tr>
+                    } 
+                </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="redModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -48,6 +83,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 @section Scripts{
     <script type="text/javascript">

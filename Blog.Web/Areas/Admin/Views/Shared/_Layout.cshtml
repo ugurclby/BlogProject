@@ -16,24 +16,19 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item active">
                             <a class="nav-link" asp-action="Index" asp-controller="AppUser" asp-area="Admin">Ana Sayfa <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">Hakkımızda</a>
                         </li>  
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                                Profil
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="AppUser" asp-action="Update" asp-area="Admin">Düzenle</a>
-                            </div>
-                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" asp-action="Update" asp-controller="AppUser" asp-area="Admin">Profil</a>
+                        </li>  
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="UserList" asp-controller="AppUser" asp-area="Admin">Kullanıcı Listesi</a>
+                        </li> 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                                 Kategori
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Category" asp-action="Create" asp-area="Admin">Oluştur</a>
+                                @*<a class="dropdown-item" asp-controller="Category" asp-action="Create" asp-area="Admin">Oluştur</a>*@
                                 <a class="dropdown-item" asp-controller="Category" asp-action="List" asp-area="Admin">Listele</a>
                             </div>
                         </li>
@@ -42,7 +37,7 @@
                                 Makale
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Article" asp-action="Create" asp-area="Admin">Oluştur</a>
+                                @*<a class="dropdown-item" asp-controller="Article" asp-action="Create" asp-area="Admin">Oluştur</a>*@
                                 <a class="dropdown-item" asp-controller="Article" asp-action="List" asp-area="Admin">Listele</a>
                             </div>
                         </li>

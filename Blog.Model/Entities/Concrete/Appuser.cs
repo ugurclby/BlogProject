@@ -36,7 +36,34 @@ namespace Blog.Model.Entities.Concrete
             get { return _statu; }
             set { _statu = value; }
         }
+        private string _StatuDescription = "";
 
+        [NotMapped]
+        public string StatuDescription
+        {
+            get
+            {
+                switch (Statu)
+                {
+                    case Statu.Active:
+                        _StatuDescription = "Aktif";
+                        break;
+                    case Statu.Passive:
+                        _StatuDescription = "Pasif";
+                        break;
+                    case Statu.Confirmation:
+                        _StatuDescription = "Admin Onayında";
+                        break;
+                    case Statu.Modified:
+                        _StatuDescription = "Düzenlendi";
+                        break;
+                    case Statu.Rejection:
+                        _StatuDescription = "Red";
+                        break;
+                }
+                return _StatuDescription;
+            }
+        }
 
         public string FirstName { get; set; }
 

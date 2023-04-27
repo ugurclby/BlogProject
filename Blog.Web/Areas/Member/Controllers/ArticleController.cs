@@ -44,7 +44,7 @@ namespace Blog.Web.Areas.Member.Controllers
                 Categories = _categoryRepository.GetByDefaults
                 (
                     selector: a=> new GetCategoryDTO() { ID=a.ID,Name=a.Name},
-                    expression: a=>a.Statu!=Statu.Passive
+                    expression: a=>a.Statu==Statu.Active || a.Statu == Statu.Modified
                 )
             };
             return View(vm);

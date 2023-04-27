@@ -1,12 +1,8 @@
-﻿
-
-@model CreateArticleVM
-
-
+﻿@model CreateArticleVM 
 <div class="row">
-    <div class="card col-md-8 offset-2">
+    <div class="card col-md-8 offset-2 mt-5">
         <div class="card-body">
-            <div class="card-text">MAKALE EKLEME PANELİ</div>
+            <div class="card-text"><h3>Makale Ekleme Paneli</h3></div>
             <form asp-action="Create" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label asp-for="Title"></label>
@@ -15,7 +11,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Content"></label>
-                    <textarea rows="20" cols="30" asp-for="Content" class="form-control"></textarea>
+                    <textarea rows="15" cols="30" asp-for="Content" class="form-control"></textarea>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
                 <div class="form-group">

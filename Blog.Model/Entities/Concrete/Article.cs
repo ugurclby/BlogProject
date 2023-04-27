@@ -22,16 +22,10 @@ namespace Blog.Model.Entities.Concrete
         [NotMapped]    // buu alanı kolon olarak işaretleme
         public IFormFile Image { get; set; }
 
+        public int ReadCount { get; set; }
+        public int ReadTime { get; set; } // Dk cinsinden tutulacaktır.
 
-        // navigationProp
-
-        // 1 kategorisi vardır.
-
-        //public int CategoryID { get; set; } Hoca
-
-        //public Category  Category { get; set; } Hoca
-
-
+  
         // 1 makalenin 1 yazarı 
 
         public string AppUserID { get; set; }

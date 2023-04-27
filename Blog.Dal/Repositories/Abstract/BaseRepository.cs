@@ -33,8 +33,7 @@ namespace Blog.Dal.Repositories.Abstract
         {
             entity.Statu = Statu.Passive;
             _context.SaveChanges();
-        }
-
+        } 
         public TResult GetByDefault<TResult>(Expression<Func<T, TResult>> selector, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
             IQueryable<T> query = _table;

@@ -28,13 +28,16 @@ namespace Blog.Web.Areas.Admin.Controllers
         private readonly IAppUserRepository _appUserRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUsedPasswordRepository _usedPasswordRepository;
-        public AppUserController( UserManager<Appuser> userManager, IMapper mapper, IAppUserRepository appUserRepository, ICategoryRepository categoryRepository, IUsedPasswordRepository usedPasswordRepository)
+        private readonly SignInManager<Appuser> _signInManager;
+
+        public AppUserController(SignInManager<Appuser> signInManager, UserManager<Appuser> userManager, IMapper mapper, IAppUserRepository appUserRepository, ICategoryRepository categoryRepository, IUsedPasswordRepository usedPasswordRepository)
         { 
             _userManager = userManager;
             _mapper = mapper;
             _appUserRepository = appUserRepository;
             _categoryRepository = categoryRepository;
             _usedPasswordRepository = usedPasswordRepository;
+            _signInManager = signInManager;
         }
         public IActionResult Index()
         {
@@ -78,57 +81,44 @@ namespace Blog.Web.Areas.Admin.Controllers
             var register = _mapper.Map<AdminRegisterUpdateDTO>(appuser);
             return View(register);
         }
-        [HttpPost]
-        public async Task<IActionResult> Update(AdminRegisterUpdateDTO dto)
+         
+        public async Task<IActionResult> LogOut()
         {
-            bool isChangedPass = false;
+            await _signInManager.SignOutAsync();
+            return Redirect("~/");      // redirectoaction("index","home");
+        }
 
-            if (ModelState.IsValid)
-            { 
-                var updateUser = _userManager.Users.FirstOrDefault(I => I.Id == dto.Id); 
-
-                if (dto.Image != null)
-                {
-                    using var image = Image.Load(dto.Image.OpenReadStream());
-                    image.Mutate(a => a.Resize(80, 80));
-                    image.Save($"wwwroot/images/{dto.UserName}.jpg");
-                    updateUser.ImagePath = $"/images/{dto.UserName}.jpg";
-                }
-
-                updateUser.FirstName = dto.FirstName;
-                updateUser.LastName = dto.LastName;
-                updateUser.UserName = dto.UserName;
-                updateUser.Email = dto.Email;
-
-                //Şifre değişikliğinde hash yapılmadığı için sadece password alanı değişiyordu. bu yüzden login de şifre hatası veriyordu.
-                PasswordHasher<Appuser> ph = new PasswordHasher<Appuser>();
-                updateUser.PasswordHash = ph.HashPassword(updateUser, dto.Password);
-
-                //Eğer bir şifre değiştirme işlemi olduysa son 3 şifreden farklı olması kontrolüne girilir.
-                if (updateUser.Password != dto.Password)
-                {
-                    if (_usedPasswordRepository.IsPreviousPassword(updateUser, dto.Password))
-                    {
-                        ModelState.AddModelError("", "Girmiş olduğunuz şifre son 3 şifreden farklı olmalıdır.");
-                        return View(dto);
-                    }
-
-                    isChangedPass = true;
-                }
-
-                updateUser.Password = dto.Password;
-
-                int affectedRows = _appUserRepository.Update(updateUser);
-
-                //Update işlemi başarılı olduysa ve şifre değiştirme işlemi de yapıldıysa.UsedPassword tablomuza yeni şifre de insert edilir. 
-                if (affectedRows > 0 && isChangedPass)
-                {
-                    _usedPasswordRepository.Create(new UsedPassword() { AppUserID = updateUser.Id, Statu = Statu.Active, PasswordHash = updateUser.PasswordHash });
-                }
-
-                ViewBag.Message = "Kayıt Başarılı Bir Şekilde Güncellendi";
+        public async Task<IActionResult> UserList()
+        {
+            var memberList = new List<GetMemberAppUserListDTO>();
+            var list = await _userManager.GetUsersInRoleAsync("member"); 
+            if (list !=null)
+            {
+                memberList = _mapper.Map<List<GetMemberAppUserListDTO>>(list);
             }
-            return View(dto);
+            
+            return View(memberList);
+        }
+
+        public async Task<IActionResult> UserActive(string id)
+        {
+            var appUser = await _userManager.FindByIdAsync(id);
+            if (appUser != null)
+            {
+                appUser.Statu = Statu.Active;
+                _appUserRepository.UpdateApproval(appUser);
+            }
+            return RedirectToAction("UserList");
+        }
+        public async Task<IActionResult> UserPassive(string id)
+        {
+            var appUser = await _userManager.FindByIdAsync(id);
+            if (appUser != null)
+            {
+                appUser.Statu = Statu.Passive;
+                _appUserRepository.UpdateApproval(appUser);
+            }
+            return RedirectToAction("UserList");
         }
     }
 }
