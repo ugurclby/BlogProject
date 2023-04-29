@@ -24,8 +24,7 @@ namespace Blog.Model.Entities.Concrete
 
         public int ReadCount { get; set; }
         public int ReadTime { get; set; } // Dk cinsinden tutulacaktır.
-
-  
+         
         // 1 makalenin 1 yazarı 
 
         public string AppUserID { get; set; }
