@@ -90,7 +90,9 @@ namespace Blog.Model.Entities.Concrete
 
         public List<Comment> Comments { get; set; }
 
-        public List<UserFollowedCategory> UserFollowedCategories { get; set; } 
+        public List<UserFollowedCategory> UserFollowedCategories { get; set; }
+
+        public List<UsedPassword> UsedPasswords { get; set; }
 
     }
 }

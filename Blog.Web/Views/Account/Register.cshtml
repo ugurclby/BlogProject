@@ -1,10 +1,9 @@
 ﻿@model RegisterDTO
-
-
-
-<div class="row">
-    <div class="card col-md-8">
-        <div class="card-text"><h2>KAYIT PANELİ</h2></div>
+<div class="card col-md-12 offset-3 mt-5">
+    <div class="card-body">
+        <div class="card-text">
+            <h2>Kayıt Paneli</h2>
+        </div>
         <form asp-action="Register" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label asp-for="FirstName"></label>
@@ -37,13 +36,10 @@
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger">
-
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-success"  value="KAYIT" />
+                <input type="submit" class="btn btn-success" value="KAYIT" />
             </div>
         </form>
     </div>
 </div>
-
-

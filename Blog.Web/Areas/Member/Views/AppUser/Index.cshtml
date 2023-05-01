@@ -1,6 +1,8 @@
-﻿
-
-
-
-    @await Component.InvokeAsync("Articles")
-
+﻿<div class="row">
+    <div id="Dv_Articles" class="col-lg-8"> 
+            @await Component.InvokeAsync("Articles") 
+    </div>
+    <div id="Dv_Categories" class="col-lg-4">
+        @await Component.InvokeAsync("CategoryList")
+    </div>
+</div>

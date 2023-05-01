@@ -10,10 +10,12 @@ using AutoMapper;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Blog.Model.Entities.Enums;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Blog.Web.Areas.Member.Controllers
 {
@@ -26,12 +28,12 @@ namespace Blog.Web.Areas.Member.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public ArticleController(UserManager<Appuser> userManager,IArticleRepository articleRepository,ICategoryRepository categoryRepository,IMapper mapper)
+        public ArticleController(UserManager<Appuser> userManager, IArticleRepository articleRepository, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _userManager = userManager;
             _articleRepository = articleRepository;
             _categoryRepository = categoryRepository;
-           _mapper = mapper;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Create()
@@ -43,8 +45,8 @@ namespace Blog.Web.Areas.Member.Controllers
                 AppUserID = appuser.Id,
                 Categories = _categoryRepository.GetByDefaults
                 (
-                    selector: a=> new GetCategoryDTO() { ID=a.ID,Name=a.Name},
-                    expression: a=>a.Statu==Statu.Active || a.Statu == Statu.Modified
+                    selector: a => new SelectListItem() { Text = a.Name, Value = a.ID.ToString() },
+                    expression: a => a.Statu == Statu.Active || a.Statu == Statu.Modified
                 )
             };
             return View(vm);
@@ -54,27 +56,37 @@ namespace Blog.Web.Areas.Member.Controllers
         [HttpPost]
         public IActionResult Create(CreateArticleVM vm)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                 Article article=_mapper.Map<Article>(vm);
+                Article article = _mapper.Map<Article>(vm);
+                List<ArticleCategory> articleCategories = new List<ArticleCategory>();
 
-                using var image = Image.Load(vm.Image.OpenReadStream()); 
+                using var image = Image.Load(vm.Image.OpenReadStream());
 
                 image.Mutate(a => a.Resize(80, 80));
                 Guid guid = Guid.NewGuid();
                 image.Save($"wwwroot/images/{guid}.jpg");
                 article.ImagePath = $"/images/{guid}.jpg";
 
+
+                if (vm.CategoryID.Length > 0)
+                {
+                    foreach (var categoryId in vm.CategoryID)
+                    {
+                        articleCategories.Add(new ArticleCategory() { CategoryID = categoryId, ArticleID = vm.ID });
+                    }
+                    article.ArticleCategories = articleCategories;
+                }
                 _articleRepository.Create(article);
                 return RedirectToAction("List");
             }
 
             // toDo:vm nesnesi üzerinde doldurulması greken alanlar var. aksi takdirde category seçimi yapılamaz.
-            
+
             vm.Categories = _categoryRepository.GetByDefaults
             (
-                selector: a => new GetCategoryDTO() {ID = a.ID, Name = a.Name},
-                expression: a => a.Statu != Statu.Passive
+                selector: a => new SelectListItem() { Text = a.Name, Value = a.ID.ToString() },
+                expression: a => a.Statu == Statu.Active || a.Statu == Statu.Modified
             );
 
             return View(vm);
@@ -82,7 +94,7 @@ namespace Blog.Web.Areas.Member.Controllers
 
         public async Task<IActionResult> List()
         {
-            Appuser appuser =await  _userManager.GetUserAsync(User);
+            Appuser appuser = await _userManager.GetUserAsync(User);
 
             var list = _articleRepository.GetByDefaults
                 (
@@ -97,21 +109,27 @@ namespace Blog.Web.Areas.Member.Controllers
 
         public IActionResult Update(int id)
         {
-            Article article = _articleRepository.GetDefault(a => a.ID == id);
+            Article article = _articleRepository.GetByDefault(article1 => article1, article1 => article1.ID == id, article1 => article1.Include(a => a.ArticleCategories));
+            List<int> selectedCategory = new List<int>();
 
             var updatedArticle = _mapper.Map<UpdateArticleVM>(article);
-            
-            updatedArticle.Categories = _categoryRepository.GetByDefaults
-                (selector: a=> new GetCategoryDTO() { ID=a.ID, Name=a.Name},
-                expression: a=>a.Statu!=Statu.Passive);
+            article.ArticleCategories.ForEach(c => selectedCategory.Add(c.ID));
+
+            updatedArticle.Categories = _categoryRepository.GetByDefaults(
+                    selector: a => new SelectListItem() { Text = a.Name, Value = a.ID.ToString() },
+                    expression: a => a.Statu != Statu.Active || a.Statu == Statu.Modified);
+
+            updatedArticle.CategoryID = selectedCategory.ToArray();
+
             return View(updatedArticle);
+
         }
 
 
         [HttpPost]
         public IActionResult Update(UpdateArticleVM vm)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var article = _mapper.Map<Article>(vm);
 
@@ -127,7 +145,7 @@ namespace Blog.Web.Areas.Member.Controllers
 
                     System.IO.File.Delete($"wwwroot/{vm.ImagePath}");
 
-                }  
+                }
 
                 _articleRepository.Update(article);
                 return RedirectToAction("List");
@@ -137,22 +155,12 @@ namespace Blog.Web.Areas.Member.Controllers
             // todo: categories listesi null geleceği için category nesnelerini viewa taşıyaıyoruz ??
             // todo : makale fotoğrafı güncellenmezse ?
             // todo: makale fotoğrafı güncellenirse wwwroot alıntında bu makaleya ait fotoğrafı silsek ve yerine bu güncel fotoğrafı yerleştirmiş olalım ki images klasörü de gittikçe kalabalıklaşmasın.
-            
-            vm.Categories = _categoryRepository.GetByDefaults
-            (selector: a => new GetCategoryDTO() { ID = a.ID, Name = a.Name },
+
+            vm.Categories = _categoryRepository.GetByDefaults (
+                selector: a => new SelectListItem() { Text = a.Name, Value = a.ID.ToString() },
                 expression: a => a.Statu != Statu.Passive);
 
             return View(vm);
-        }
-
-
-
-
-
-
-
-
-
-
+        } 
     }
 }

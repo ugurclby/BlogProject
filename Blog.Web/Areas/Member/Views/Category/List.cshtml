@@ -1,50 +1,47 @@
 ﻿@model List<Category> 
-<div class="row">
-    <div class="card col-md-8 offset-2 mt-5">
-        <div class="card-body">
-            <div class="card-text"><h3>Kategori Listeleme Paneli</h3></div>
-            <p>
-                <a asp-action="Create">Yeni Kategori Ekle</a>
-            </p>
-            <table class="table table-striped">
-                <thead>
+<div class="card col-md-12 offset-2 mt-5">
+    <div class="card-body">
+        <div class="card-text"><h3>Kategori Listeleme Paneli</h3></div>
+        <p>
+            <a asp-action="Create" class="btn btn-primary">Yeni Kategori Ekle</a>
+        </p>
+        <table class="table table-striped">
+            <thead>
                 <tr>
                     <th>Kategori Ad</th>
                     <th>Durum</th>
-                    <th>Operasyon</th> 
+                    <th>Operasyon</th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
 
                 @foreach (var item in Model)
                 {
-                        
-
                     <tr>
                         <td>@item.Name</td>
                         <td>@item.StatuDescription</td>
                         <td>
-                            <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-success">Güncelle</a> 
-                                @if (item.UserFollowedCategories.Any(x => x.CategoryID == item.ID && x.AppUserID == ViewBag.UserId))
-                                {
-                                    <text><a asp-action="UnFollow" asp-route-id="@item.ID" class="btn btn-info">Takibi Bırak</a></text>
-                                    
-                                }
-                                else
-                                {
-                                    <text><a asp-action="Follow" asp-route-id="@item.ID" class="btn btn-info">Takip Et</a>  </text> 
-                                }
-                            
+                            <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-success">Güncelle</a>
+                            @if (item.UserFollowedCategories.Any(x => x.CategoryID == item.ID && x.AppUserID == ViewBag.UserId))
+                            {
+                                <text><a asp-action="UnFollow" asp-route-id="@item.ID" class="btn btn-info">Takibi Bırak</a></text>
+
+                            }
+                            else
+                            {
+                                <text><a asp-action="Follow" asp-route-id="@item.ID" class="btn btn-info">Takip Et</a>  </text>
+                            }
+
                             <a href="" data-toggle="modal" data-target="#silModal" data-id="@item.ID" class="btn btn-danger btn-sm">Sil</a>
                         </td>
                     </tr>
                 }
 
-                </tbody>
-            </table>
+            </tbody>
+        </table>
 
-        </div>
     </div>
+</div>
 </div>
 
 <div class="modal fade" id="silModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -65,33 +62,32 @@
             </div>
         </div>
     </div>
-</div>
 
-@section Scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#silModal").on("show.bs.modal", function (event) {
-                let tetikleyenElement = $(event.relatedTarget);
-                let id = tetikleyenElement.data("id");
+    @section Scripts{
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#silModal").on("show.bs.modal", function (event) {
+                    let tetikleyenElement = $(event.relatedTarget);
+                    let id = tetikleyenElement.data("id");
 
-                $("#btnSil").click(function () {
-                    $.ajax({
-                        type: "Get",
-                        url: "./Delete",
-                        data: { id: id },
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8;",
-                        success: function () {
-                            //alert("işlem tamam");
-                            window.location.reload();
-                        },
-                        error: function (error) {
-                            alert(error.statusText);
-                        }
-                    })
-                });
-            })
-        });
-    </script>
+                    $("#btnSil").click(function () {
+                        $.ajax({
+                            type: "Get",
+                            url: "./Delete",
+                            data: { id: id },
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8;",
+                            success: function () {
+                                //alert("işlem tamam");
+                                window.location.reload();
+                            },
+                            error: function (error) {
+                                alert(error.statusText);
+                            }
+                        })
+                    });
+                })
+            });
+        </script>
 
-}
+    }

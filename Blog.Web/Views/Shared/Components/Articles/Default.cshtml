@@ -1,23 +1,21 @@
-﻿@model List<GetArticleWithUser>  
-    @foreach (var item in Model)
-    {
-        <div class="card mb-4">
-            <img src="@item.ImagePath" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">@item.Title</h5>
-                <p class="card-text">@item.Content.Substring(0,100)</p>
-                <p class="card-text">devamını okumak için <a asp-action="Detail" asp-route-id="@item.ArticleId">tıklayınız..</a></p>
-                <p class="card-text"><small class="text-muted">Oluşma Tarihi : @item.CreatedDate.ToShortDateString()</small></p>
-                <a class="btn btn-outline-info" asp-action="Detail" asp-controller="" asp-area="" asp-route-id="@item.AppUserId">Yazar : @item.UserFullName</a>
+﻿@model List<GetArticleWithUser>
+<div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 justify-content-center">
+        @foreach (var item in Model)
+        {
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <img src="@item.ImagePath" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Content.Substring(0, 30)</p>
+                        <p class="card-text">devamını okumak için <a asp-action="Detail" asp-route-id="@item.ArticleId">tıklayınız..</a></p>
+                        <p class="card-text"><small class="text-muted">Oluşma Tarihi : @item.CreatedDate.ToShortDateString()</small></p>
+                        <a class="btn btn-outline-info" asp-action="Detail" asp-controller="" asp-area="" asp-route-id="@item.AppUserId">Yazar : @item.UserFullName</a>
+                    </div>
+                </div>
             </div>
-        </div> 
-    } 
-@*<div class="card mb-4">
-    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-    <div class="card-body">
-        <div class="small text-muted">January 1, 2023</div>
-        <h2 class="card-title h4">Post Title</h2>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-        <a class="btn btn-primary" href="#!">Read more →</a>
+
+        }
     </div>
-</div>*@
+</div> 

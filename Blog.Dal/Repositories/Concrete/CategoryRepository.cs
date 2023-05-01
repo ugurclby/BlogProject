@@ -22,16 +22,21 @@ namespace Blog.Dal.Repositories.Concrete
         }
 
         public List<Category> GetCategoriesWithBlog()
-        { 
-            return  _projectContext.Categories.Join(_projectContext.ArticleCategories, c => c.ID, cb => cb.CategoryID, (category, articleCategory) => new
+        {
+            //return  _projectContext.Categories.Where(x=> x.Statu == Statu.Active).OrderByDescending(I => I.ID).Include(I => I.ArticleCategories).ToList();
+
+            return _projectContext.Categories.Join(_projectContext.ArticleCategories, c => c.ID, cb => cb.CategoryID, (category, articleCategory) => new
             {
                 category,
                 articleCategory
-            }).Where(x=>x.category.Statu==Statu.Active).Select(I => new Category
+            }).Where(x => x.category.Statu == Statu.Active || x.category.Statu == Statu.Modified).
+                Select(I => new Category
             {
                 ID = I.category.ID,
-                Name = I.category.Name
-            }).ToList();
+                Name = I.category.Name,
+                ArticleCategories = I.category.ArticleCategories
+            }).Distinct()
+                .ToList();
         }
     }
 }

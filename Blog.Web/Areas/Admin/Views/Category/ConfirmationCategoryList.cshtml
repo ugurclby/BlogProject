@@ -1,36 +1,7 @@
-﻿
-@{
-    ViewData["Title"] = "ConfirmationCategoryList";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
-@model List<GetConfirmationCategoryListDTO>
-
-@*<h3>Onay Bekleyen Kategori Listesi</h3>
-
-<table class="table table-sm table-hover mt-2">
-    <tr>
-        <th>Kategori Adı</th>
-        <th>Kategori Açıklama</th> 
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Name</td>
-            <td>@item.Description</td> 
-            <td>
-                <a asp-action="CategoryApproval" asp-route-id="@item.Id" class="btn btn-primary btn-sm"><i class="far fa-edit mr-2"></i>Onay</a>
-                <a href="" data-toggle="modal" data-target="#redModal" data-id="@item.Id" class="btn btn-danger btn-sm">
-
-                    <i class="fas fa-times-circle mr-2"></i>Red
-                </a>
-            </td>
-        </tr>
-    }
-</table>*@
-
-<div class="row">
-    <div class="card col-md-8 offset-2 mt-5">
+﻿ 
+@model List<GetConfirmationCategoryListDTO> 
+ 
+    <div class="card col-md-12 mt-5">
         <div class="card-body">
             <div class="card-text">Onay Bekleyen Kategori Listesi</div>
             <table class="table table-striped">
@@ -58,9 +29,7 @@
                 </tbody>
             </table> 
         </div>
-    </div>
-</div>
-
+    </div> 
 
 
 <!-- Modal -->

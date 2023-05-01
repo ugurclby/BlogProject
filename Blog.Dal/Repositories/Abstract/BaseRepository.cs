@@ -25,6 +25,7 @@ namespace Blog.Dal.Repositories.Abstract
 
         public void Create(T entity)
         {
+
            _table.Add(entity);
             _context.SaveChanges(); 
         }

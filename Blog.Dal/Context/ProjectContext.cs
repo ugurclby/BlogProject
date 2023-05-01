@@ -37,6 +37,7 @@ namespace Blog.Dal.Context
             builder.ApplyConfiguration(new LikeMap());
             builder.ApplyConfiguration(new UserFollowedCategoryMap());
             builder.ApplyConfiguration(new CategoryMap());
+            builder.ApplyConfiguration(new UsedPasswordMap());
 
             string adminId = Guid.NewGuid().ToString();
             string roleId = Guid.NewGuid().ToString();

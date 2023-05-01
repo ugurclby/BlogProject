@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Blog.Web</title>
+    <link href="~/multi/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/multi/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="~/multi/css/site.css" rel="stylesheet" />
+    <link href="~/multi/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-action="Index" asp-controller="AppUser" asp-area="Admin">Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" asp-action="Update" asp-controller="AppUser" asp-area="Admin">Profilim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="UserList" asp-controller="AppUser" asp-area="Admin">Kullanıcı Listesi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="List" asp-controller="Category" asp-area="Admin">Kategori İşlemleri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="List" asp-controller="Article" asp-area="Admin">Makale İşlemleri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="LogOut" asp-controller="AppUser" asp-area="Admin">Çıkış Yap</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container"> 
+            <div class="row">
+                @RenderBody()
+            </div> 
+    </div>
+    @*    <footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>*@
+    <script src="~/multi/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/multi/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/multi/css/bootstrap-multiselect.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html> 

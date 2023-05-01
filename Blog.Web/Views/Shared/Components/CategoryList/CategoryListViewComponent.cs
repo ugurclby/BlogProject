@@ -1,7 +1,10 @@
-﻿using Blog.Dal.Repositories.Interfaces.Concrete;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Blog.Dal.Repositories.Interfaces.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Blog.Model;
 using Blog.Model.Entities.Enums;
+using Blog.Web.Models.DTOs;
 
 namespace Blog.Web.Views.Shared.Components.CategoryList
 {
@@ -15,9 +18,8 @@ namespace Blog.Web.Views.Shared.Components.CategoryList
 
         public IViewComponentResult Invoke()
         {
-            var list = _categoryRepository.GetCategoriesWithBlog();
-            return View(list); 
-            
+            var list = _categoryRepository.GetCategoriesWithBlog(); 
+            return View(list);  
         }
     }
 }

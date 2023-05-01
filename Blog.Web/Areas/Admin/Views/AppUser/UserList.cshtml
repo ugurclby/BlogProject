@@ -1,51 +1,44 @@
-﻿@{
-    ViewData["Title"] = "UserList";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-}
-@using Blog.Model.Entities.Enums
+﻿@using Blog.Model.Entities.Enums
 @model List<GetMemberAppUserListDTO>
 
-<div class="row">
-    <div class="card col-md-8 offset-2 mt-5">
-        <div class="card-body">
-            <div class="card-text">Kullanıcı Listesi</div>
-            <table class="table table-striped">
-                <thead>
+<div class="card col-md-12 mt-5">
+    <div class="card-body">
+        <div class="card-text">Kullanıcı Listesi</div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Soyad</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Mail</th>
+                    <th>Statu</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
                     <tr>
-                        <th>Ad</th>
-                        <th>Soyad</th>
-                        <th>Kullanıcı Adı</th>
-                        <th>Mail</th>
-                        <th>Statu</th>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                        <td>@item.StatuDescription</td>
+                        <td>
+                            @if (item.Statu == Statu.Active || item.Statu == Statu.Modified)
+                            {
+                                <a asp-action="UserPassive" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Pasif Et</a>
+                            }
+                            else if (item.Statu == Statu.Passive)
+                            {
+                                <a asp-action="UserActive" asp-route-id="@item.Id" class="btn btn-success btn-sm">Aktif Et</a>
+                            }
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
+                }
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.FirstName</td>
-                            <td>@item.LastName</td>
-                            <td>@item.UserName</td>
-                            <td>@item.Email</td>
-                            <td>@item.StatuDescription</td>
-                            <td>
-                                @if (item.Statu == Statu.Active || item.Statu == Statu.Modified)
-                                {
-                                    <a asp-action="UserPassive" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Pasif Et</a>
-                                }
-                                else if (item.Statu == Statu.Passive)
-                                {
-                                    <a asp-action="UserActive" asp-route-id="@item.Id" class="btn btn-success btn-sm">Aktif Et</a> 
-                                }
-                            </td>
-                        </tr>
-                    }
+            </tbody>
+        </table>
 
-                </tbody>
-            </table>
-
-        </div>
     </div>
-</div>
-
+</div> 

@@ -1,4 +1,4 @@
-﻿@model List<Blog.Model.Entities.Concrete.Category>
+﻿@model List<Category>
 @if (Model.Count > 0)
 {
     <div class="card my-4">
@@ -10,7 +10,7 @@
             <div class="list-group">
                 <a asp-action="Index" asp-route-categoryId="@category.ID" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     @category.Name
-                    <span class="badge badge-dark badge-pill">12@*@category.BlogsCount*@</span>
+                    <span class="badge badge-dark badge-pill">@category.ArticleCategories.Count</span>
                 </a>
             </div>
         }

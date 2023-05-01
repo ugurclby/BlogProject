@@ -136,10 +136,10 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c45c9e1b-7df9-4ede-862e-3c5f3cc86739",
+                            Id = "102485ef-40d6-4d4c-95b6-295011e265d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8c194fc3-3a15-41db-8b60-610fbd350691",
-                            CreatedDate = new DateTime(2023, 4, 25, 17, 8, 55, 493, DateTimeKind.Local).AddTicks(3189),
+                            ConcurrencyStamp = "d921fa03-d7ad-4cee-984c-23a8e05af793",
+                            CreatedDate = new DateTime(2023, 4, 30, 16, 24, 49, 236, DateTimeKind.Local).AddTicks(7539),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "admin",
@@ -147,9 +147,10 @@ namespace Blog.Dal.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFc3Ju2qv53gcXk/56nnK2086b28r2qd61rZ8yuaKL6VSFYiUs1O5OBPZQ0vIEtMOA==",
+                            Password = "admin123",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMgaqnH6gXcZiz08Z78DJWkAL1g9wygvyxacExRgtpxrdR6j5FHofIZiptSeoH5/rQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2d0644b7-ee48-4e05-bd19-956110d817f1",
+                            SecurityStamp = "a00b0114-32a4-4569-805a-8b822d5b32c7",
                             Statu = 1,
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
@@ -175,6 +176,12 @@ namespace Blog.Dal.Migrations
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReadCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReadTime")
+                        .HasColumnType("int");
 
                     b.Property<int>("Statu")
                         .HasColumnType("int");
@@ -360,15 +367,15 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ac2099d2-009d-4c4f-9ddd-d2c7a11415cd",
-                            ConcurrencyStamp = "338bdef3-aa5e-4b17-9792-5693f37997ba",
+                            Id = "f20744a0-0e77-463c-ae85-6b50f6a1df1c",
+                            ConcurrencyStamp = "609c411a-6455-4762-90f9-3400f5aaa8cb",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "3d575ed8-e02d-4815-ae0f-9104a261ce7b",
-                            ConcurrencyStamp = "dbf2ab9c-c470-4c13-9a83-7295385b4b79",
+                            Id = "da0c2544-2a84-4505-834c-823358b833e1",
+                            ConcurrencyStamp = "88e3bef0-5ae2-4714-9203-04c4a7be931b",
                             Name = "member",
                             NormalizedName = "MEMBER"
                         });
@@ -461,8 +468,8 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "c45c9e1b-7df9-4ede-862e-3c5f3cc86739",
-                            RoleId = "ac2099d2-009d-4c4f-9ddd-d2c7a11415cd"
+                            UserId = "102485ef-40d6-4d4c-95b6-295011e265d4",
+                            RoleId = "f20744a0-0e77-463c-ae85-6b50f6a1df1c"
                         });
                 });
 
@@ -540,8 +547,9 @@ namespace Blog.Dal.Migrations
             modelBuilder.Entity("Blog.Model.Entities.Concrete.UsedPassword", b =>
                 {
                     b.HasOne("Blog.Model.Entities.Concrete.Appuser", "Appuser")
-                        .WithMany()
-                        .HasForeignKey("AppUserID");
+                        .WithMany("UsedPasswords")
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Blog.Model.Entities.Concrete.UserFollowedCategory", b =>
