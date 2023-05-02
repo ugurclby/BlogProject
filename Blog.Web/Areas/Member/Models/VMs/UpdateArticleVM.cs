@@ -32,6 +32,7 @@ namespace Blog.Web.Areas.Member.Models.VMs
         [Required(ErrorMessage = "Kategori seçmelisiniz.")]
         [Display(Name = "Kategoriler")]
         public int[] CategoryID { get; set; }
+        
         [NotMapped]
         public List<SelectListItem> Categories { get; set; }
         

@@ -12,6 +12,7 @@ namespace Blog.Model.Entities.Concrete
         {
             Comments = new List<Comment>();
             Likes = new List<Like>();
+            ArticleCategories=new List<ArticleCategory>();
         }
         public string Title { get; set; }
 

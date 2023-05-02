@@ -15,7 +15,7 @@ namespace Blog.Dal.Repositories.Interfaces.Abstract
         void Create(T entity);
 
         void Delete(T entity);
-
+        void DeleteRangeNotPassive(List<T> entities);
         void Update(T entity);
 
         void UpdateApproval(T entity); 

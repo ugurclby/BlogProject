@@ -14,5 +14,6 @@ namespace Blog.Dal.Repositories.Concrete
         public ArticleRepository(ProjectContext context) : base(context)
         {
         }
+
     }
 }

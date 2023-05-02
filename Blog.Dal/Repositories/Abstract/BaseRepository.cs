@@ -34,7 +34,12 @@ namespace Blog.Dal.Repositories.Abstract
         {
             entity.Statu = Statu.Passive;
             _context.SaveChanges();
-        } 
+        }
+        public void DeleteRangeNotPassive(List<T> entities)
+        {
+            _table.RemoveRange(entities);
+            _context.SaveChanges();
+        }
         public TResult GetByDefault<TResult>(Expression<Func<T, TResult>> selector, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null)
         {
             IQueryable<T> query = _table;
@@ -65,8 +70,10 @@ namespace Blog.Dal.Repositories.Abstract
 
         public void Update(T entity)
         {
+            //_context.Entry(entity).State = EntityState.Modified;
             entity.Statu = Statu.Modified;
-            _table.Update(entity);
+            //_table.Attach(entity);
+            _table.Update(entity); 
             _context.SaveChanges();
         }
         public void UpdateApproval(T entity)
