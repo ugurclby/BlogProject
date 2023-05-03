@@ -4,6 +4,7 @@ using Blog.Web.Areas.Admin.Models;
 using Blog.Web.Areas.Member.Models;
 using Blog.Web.Areas.Member.Models.VMs;
 using Blog.Web.Models.DTOs;
+using Blog.Web.Models.VMs;
 
 namespace Blog.Web.Models.AutoMappers
 {
@@ -26,6 +27,11 @@ namespace Blog.Web.Models.AutoMappers
             CreateMap<UpdateArticleVM,Article>().ReverseMap();
             
             CreateMap<AboutDTO, About>();
+
+            CreateMap<CreateCommentVM, Comment>();
+
+            CreateMap<CreateLikeVM, Like>();
+            
         }
     }
 }

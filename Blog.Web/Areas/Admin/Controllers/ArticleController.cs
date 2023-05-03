@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Blog.Model.Entities.Concrete;
+using Blog.Web.Models.VMs;
+using Blog.Dal.Repositories.Concrete;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
@@ -15,12 +18,17 @@ namespace Blog.Web.Areas.Admin.Controllers
     {
 
         private readonly IMapper _mapper;
-        private readonly IArticleRepository _articleRepository; 
+        private readonly IArticleRepository _articleRepository;
+        private readonly ICommentRepository _commentRepository;
+        private readonly ILikeRepository _likeRepository;
 
-        public ArticleController(IMapper mapper, IArticleRepository articleRepository)
+
+        public ArticleController(IMapper mapper, IArticleRepository articleRepository, ICommentRepository commentRepository, ILikeRepository likeRepository)
         {
             _mapper = mapper;
-            _articleRepository = articleRepository;  
+            _articleRepository = articleRepository;
+            _commentRepository = commentRepository;
+            _likeRepository = likeRepository;
         }
         public IActionResult ConfirmationArticleList()
         {
@@ -67,6 +75,24 @@ namespace Blog.Web.Areas.Admin.Controllers
             ViewBag.Sayfa=sayfa;
             return View();
         }
+        public IActionResult AddToComment(CreateCommentVM createCommentVm)
+        {
+            _commentRepository.Create(_mapper.Map<Comment>(createCommentVm));
+            return RedirectToAction("ArticleDetail",new{id=createCommentVm.ArticleID,sayfa="admin"});
+        }
+        public IActionResult AddToLike(CreateLikeVM createLikeVm)
+        {
+            if (createLikeVm.Type.Equals("Vazgeç"))
+            {
+                _likeRepository.Delete(_mapper.Map<Like>(createLikeVm));
+                return RedirectToAction("ArticleDetail", new { id = createLikeVm.ArticleID, sayfa = "admin" });
+            }
+            
+            _likeRepository.Create(_mapper.Map<Like>(createLikeVm));
+ 
+            return RedirectToAction("ArticleDetail", new { id = createLikeVm.ArticleID, sayfa = "admin" });
+        }
         
+
     }
 }

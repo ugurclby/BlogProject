@@ -58,6 +58,8 @@ namespace Blog.Web
             services.AddScoped<IUsedPasswordRepository, UsedPasswordRepository>();
             services.AddScoped<IUserFollowedCategoryRepository, UserFollowedCategoryRepository>();
             services.AddScoped<IArticleCategoryRepository, ArticleCategoryRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
 
             services.AddAuthentication();
         }
