@@ -1,14 +1,12 @@
-﻿@model List<GetConfirmationUserListDTO> 
+﻿@model List<GetConfirmationArticleListDTO> 
 <div class="card col-md-12 mt-5">
     <div class="card-body">
-        <div class="card-text"><h3>Onay Bekleyen Kullanıcı Listesi</h3></div>
+        <div class="card-text"><h3>Onay Bekleyen Makale Listesi</h3></div>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Ad</th>
-                    <th>Soyad</th>
-                    <th>Kullanıcı Adı</th>
-                    <th>Mail</th>
+                    <th>Makale Başlık</th>
+                    <th>Yazar</th>  
                 </tr>
             </thead>
             <tbody>
@@ -16,15 +14,14 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.FirstName</td>
-                        <td>@item.LastName</td>
-                        <td>@item.UserName</td>
-                        <td>@item.Email</td>
+                        <td>@item.Title</td>
+                        <td>@item.Appuser.FullName</td> 
                         <td>
-                            <a asp-action="UserApproval" asp-route-id="@item.Id" class="btn btn-success btn-sm">Onay</a>
+                            <a asp-action="ArticleApproval" asp-route-id="@item.Id" class="btn btn-success btn-sm">Onay</a>
                             <a href="" data-toggle="modal" data-target="#redModal" data-id="@item.Id" class="btn btn-danger btn-sm">
                                 Red
                             </a>
+                            <a asp-action="ArticleDetail" asp-route-id="@item.Id" asp-route-sayfa="admin" class="btn btn-success btn-sm">İncele</a>
                         </td>
                     </tr>
                 }
@@ -67,7 +64,7 @@
                 $("#btnSil").click(function () {
                     $.ajax({
                         type: "Get",
-                        url: "./RejectionUser",
+                        url: "./RejectionArticle",
                         data: { id: id },
                         dataType: "json",
                         contentType: "application/json; charset=utf-8;",

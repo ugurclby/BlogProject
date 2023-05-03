@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Blog.Model.Entities.Enums;
+using Blog.Web.Models.DTOs;
 
 namespace Blog.Dal.Repositories.Concrete
 {
@@ -21,22 +22,34 @@ namespace Blog.Dal.Repositories.Concrete
             _table = _projectContext.Set<Category>();
         }
 
-        public List<Category> GetCategoriesWithBlog()
-        {
-            //return  _projectContext.Categories.Where(x=> x.Statu == Statu.Active).OrderByDescending(I => I.ID).Include(I => I.ArticleCategories).ToList();
-
-            return _projectContext.Categories.Join(_projectContext.ArticleCategories, c => c.ID, cb => cb.CategoryID, (category, articleCategory) => new
-            {
-                category,
-                articleCategory
-            }).Where(x => x.category.Statu == Statu.Active || x.category.Statu == Statu.Modified).
-                Select(I => new Category
-            {
-                ID = I.category.ID,
-                Name = I.category.Name,
-                ArticleCategories = I.category.ArticleCategories
-            }).Distinct()
+        public List<CategoryFilterDto> GetCategoriesWithBlogCount()
+        {  
+            var categoryFilters = _projectContext.ArticleCategories
+                .Join(
+                    _projectContext.Categories,
+                    articleCategoryTable => articleCategoryTable.CategoryID,
+                    categoryTable => categoryTable.ID,
+                    (articleCategoryTable, category) => new { articleCategoryTable, category }
+                )
+                .Join(
+                    _projectContext.Articles,
+                    combinedTableArticleCategory => combinedTableArticleCategory.articleCategoryTable.ArticleID,
+                    articleTable => articleTable.ID,
+                    (combinedTableArticleCategory, articleTable) => new CategoryFilterDto
+                    {
+                        CategoryId = combinedTableArticleCategory.category.ID,
+                        CategoryName = combinedTableArticleCategory.category.Name,
+                        CategoryStatu = combinedTableArticleCategory.category.Statu, 
+                        ArticleCount = _projectContext.ArticleCategories.Count(x =>
+                            x.CategoryID== combinedTableArticleCategory.category.ID && (x.Article.Statu==Statu.Active|| x.Article.Statu == Statu.Modified))
+                    }
+                )
+                .Where(fullEntry => 
+                    fullEntry.CategoryStatu == Statu.Active || fullEntry.CategoryStatu == Statu.Modified)
+                .Distinct()
                 .ToList();
+            return categoryFilters;
+ 
         }
     }
 }

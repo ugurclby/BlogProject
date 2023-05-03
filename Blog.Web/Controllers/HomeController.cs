@@ -25,8 +25,13 @@ namespace Blog.Web.Controllers
             _aboutRepository = aboutRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId)
         {
+            ViewBag.CategoryId = 0;
+            if (categoryId.HasValue)
+            {
+                ViewBag.CategoryId = categoryId.Value;
+            }
             return View();
         }
 

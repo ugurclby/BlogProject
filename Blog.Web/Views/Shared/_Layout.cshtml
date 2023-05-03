@@ -4,13 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
-    <meta name="author" content="" /> 
+    <meta name="author" content="" />
     <link href="~/multi/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/multi/css/bootstrap-multiselect.css" rel="stylesheet" />
     <link href="~/multi/css/site.css" rel="stylesheet" />
     <link href="~/multi/css/styles.css" rel="stylesheet" />
 </head>
-<body> 
+<body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -22,25 +22,30 @@
                 </ul>
             </div>
         </div>
-    </nav> 
-<div class="container">
-        <div class="row"> 
-            <div class="col-lg-8"> 
-                <div class="row"> 
-                         @RenderBody()
-                </div>
-            </div> 
-            <div class="col-lg-4">
-                @await Component.InvokeAsync("CategoryList")  
-            </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            @RenderBody()
         </div>
-    </div> 
-@*    <footer class="py-5 bg-dark">
-        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-    </footer>*@ 
-<script src="~/multi/lib/jquery/dist/jquery.min.js"></script> 
-<script src="~/multi/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/multi/css/bootstrap-multiselect.js"></script> 
+    </div>
+    @*<div class="container">
+    <div class="row">
+    <div class="col-lg-8">
+    <div class="row">
+    @RenderBody()
+    </div>
+    </div>
+    <div class="col-lg-4">
+    @await Component.InvokeAsync("CategoryList")
+    </div>
+    </div>
+    </div> *@
+    @*    <footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>*@
+    <script src="~/multi/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/multi/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/multi/css/bootstrap-multiselect.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html> 

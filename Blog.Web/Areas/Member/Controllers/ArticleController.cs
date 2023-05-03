@@ -138,7 +138,6 @@ namespace Blog.Web.Areas.Member.Controllers
 
                 var articlefromDatabase = _articleRepository.GetByDefault(article1 => article1, article1 => article1.ID == vm.ID, article1 => article1.Include(a => a.ArticleCategories));
 
-
                 var existingIds = articlefromDatabase.ArticleCategories.Select(x => x.CategoryID).ToList();
 
                 var selectedIds = vm.CategoryID.ToList();

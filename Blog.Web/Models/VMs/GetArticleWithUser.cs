@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Blog.Model.Entities.Concrete;
+using System;
+using System.Collections.Generic;
 
 namespace Blog.Web.Models.VMs
 {
@@ -18,6 +20,6 @@ namespace Blog.Web.Models.VMs
 
         public string UserFullName { get; set; }
 
-
+        public List<ArticleCategory> ArticleCategories { get; set; }
     }
 }

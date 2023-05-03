@@ -48,9 +48,9 @@
 
                     @if (1 > 0)
                     {
-                        <p class="card-text display-4">1 @*@ViewBag.OkunmamisBildirimSayisi*@</p>
+                        <p class="card-text display-4">@ViewBag.OnayBekleyenMakale</p>
                         <p class="">
-                            <a asp-action="Index" asp-controller="AppUser" class="btn btn-light btn-sm">İncele</a>
+                            <a asp-action="ConfirmationArticleList" asp-controller="Article" class="btn btn-light btn-sm">İncele</a>
                         </p>
                     }
                     else

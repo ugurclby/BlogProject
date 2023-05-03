@@ -1,9 +1,12 @@
-﻿using Blog.Dal.Repositories.Interfaces.Concrete;
+﻿using System;
+using Blog.Dal.Repositories.Interfaces.Concrete;
 using Blog.Web.Models.VMs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using Blog.Model.Entities.Concrete;
 
 namespace Blog.Web.Views.Shared.Components.Articles
 {
@@ -19,8 +22,8 @@ namespace Blog.Web.Views.Shared.Components.Articles
             _articleRepository = articleRepository;
         }
 
-        public IViewComponentResult Invoke(string categoryId)
-        {
+        public IViewComponentResult Invoke(int categoryId)
+        { 
             List<GetArticleWithUser> list = _articleRepository.GetByDefaults
                 (
                     selector: a=> new GetArticleWithUser() 
@@ -31,12 +34,18 @@ namespace Blog.Web.Views.Shared.Components.Articles
                         ImagePath=a.ImagePath,
                         ArticleId=a.ID,
                         CreatedDate=a.CreatedDate,
-                        UserFullName=a.Appuser.FullName
+                        UserFullName=a.Appuser.FullName,
+                        ArticleCategories = a.ArticleCategories 
                     },
-                    expression: a=> a.Statu!=Model.Entities.Enums.Statu.Passive,
-                    include : a=> a.Include(a=>a.Appuser),
+                    expression: a=> a.Statu == Model.Entities.Enums.Statu.Modified || a.Statu == Model.Entities.Enums.Statu.Active,
+                    include : a=> a.Include(a=>a.Appuser).Include(a=>a.ArticleCategories),
                     orderBy: a=>a.OrderByDescending(a=>a.CreatedDate)
                 ).Take(9).ToList();
+
+            if (categoryId>0)
+            {
+                return View(list.Where(x => x.ArticleCategories.Any(y => y.CategoryID == categoryId)).Take(9).ToList());
+            }
 
             return View(list);
         }

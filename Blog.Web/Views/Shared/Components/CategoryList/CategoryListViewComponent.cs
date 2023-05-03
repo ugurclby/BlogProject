@@ -18,7 +18,7 @@ namespace Blog.Web.Views.Shared.Components.CategoryList
 
         public IViewComponentResult Invoke()
         {
-            var list = _categoryRepository.GetCategoriesWithBlog(); 
+            var list = _categoryRepository.GetCategoriesWithBlogCount(); 
             return View(list);  
         }
     }

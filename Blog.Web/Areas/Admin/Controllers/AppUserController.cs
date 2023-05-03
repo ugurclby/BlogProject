@@ -27,23 +27,23 @@ namespace Blog.Web.Areas.Admin.Controllers
         private readonly IMapper _mapper;
         private readonly IAppUserRepository _appUserRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IUsedPasswordRepository _usedPasswordRepository;
+        private readonly IArticleRepository _articleRepository;
         private readonly SignInManager<Appuser> _signInManager;
 
-        public AppUserController(SignInManager<Appuser> signInManager, UserManager<Appuser> userManager, IMapper mapper, IAppUserRepository appUserRepository, ICategoryRepository categoryRepository, IUsedPasswordRepository usedPasswordRepository)
+        public AppUserController(SignInManager<Appuser> signInManager, UserManager<Appuser> userManager, IMapper mapper, IAppUserRepository appUserRepository, ICategoryRepository categoryRepository, IArticleRepository articleRepository)
         { 
             _userManager = userManager;
             _mapper = mapper;
             _appUserRepository = appUserRepository;
             _categoryRepository = categoryRepository;
-            _usedPasswordRepository = usedPasswordRepository;
+            _articleRepository = articleRepository;
             _signInManager = signInManager;
         }
         public IActionResult Index()
         {
             ViewBag.OnayBekleyenKullanici= _appUserRepository.OnayBekleyenKullaniciListesi().Count();
-            ViewBag.OnayBekleyenKategori = _categoryRepository.GetDefaults(category => category.Statu == Statu.Confirmation)
-                .Count();
+            ViewBag.OnayBekleyenKategori = _categoryRepository.GetDefaults(category => category.Statu == Statu.Confirmation).Count();
+            ViewBag.OnayBekleyenMakale = _articleRepository.GetDefaults(article => article.Statu == Statu.Confirmation).Count();
 
             return View();
         }
