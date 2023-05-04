@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Blog.Model.Entities.Concrete;
 using Blog.Web.Models.VMs;
 using Blog.Dal.Repositories.Concrete;
+using System.Threading.Tasks;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
@@ -30,6 +31,33 @@ namespace Blog.Web.Areas.Admin.Controllers
             _commentRepository = commentRepository;
             _likeRepository = likeRepository;
         }
+
+        public IActionResult ArticleList()
+        {
+            var articleList = _articleRepository.GetByDefaults(article => article, x => x.ID > 0, queryable => queryable.Include(article => article.Appuser).Include(article => article.Likes).Include(article => article.ArticleCategories).Include(article => article.Comments));
+            return View(articleList);
+        }
+        public IActionResult ArticleActive(int id)
+        {
+            var article = _articleRepository.GetDefault(x => x.ID == id);
+            if (article != null)
+            {
+                article.Statu = Statu.Active;
+                _articleRepository.UpdateApproval(article);
+            }
+            return RedirectToAction("ArticleList");
+        }
+        public  IActionResult ArticlePassive(int id)
+        {
+            var article = _articleRepository.GetDefault(x => x.ID == id);
+            if (article != null)
+            {
+                article.Statu = Statu.Passive;
+                _articleRepository.UpdateApproval(article);
+            }
+            return RedirectToAction("ArticleList");
+        }
+
         public IActionResult ConfirmationArticleList()
         {
             List<GetConfirmationArticleListDTO> articleListDtos= new List<GetConfirmationArticleListDTO>();
@@ -69,7 +97,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             }
             return Json(null);
         }
-        public IActionResult ArticleDetail(int id,string sayfa)
+        public IActionResult ArticleDetail(int id,string sayfa= "user")
         {
             ViewBag.ArticleId = id;
             ViewBag.Sayfa=sayfa;
@@ -78,19 +106,19 @@ namespace Blog.Web.Areas.Admin.Controllers
         public IActionResult AddToComment(CreateCommentVM createCommentVm)
         {
             _commentRepository.Create(_mapper.Map<Comment>(createCommentVm));
-            return RedirectToAction("ArticleDetail",new{id=createCommentVm.ArticleID,sayfa="admin"});
+            return RedirectToAction("ArticleDetail",new{id=createCommentVm.ArticleID,sayfa="user"});
         }
         public IActionResult AddToLike(CreateLikeVM createLikeVm)
         {
-            if (createLikeVm.Type.Equals("Vazgeç"))
+            if (createLikeVm.Type.Equals("cancel"))
             {
                 _likeRepository.Delete(_mapper.Map<Like>(createLikeVm));
-                return RedirectToAction("ArticleDetail", new { id = createLikeVm.ArticleID, sayfa = "admin" });
+                return RedirectToAction("ArticleDetail", new { id = createLikeVm.ArticleID, sayfa = "user" });
             }
             
             _likeRepository.Create(_mapper.Map<Like>(createLikeVm));
  
-            return RedirectToAction("ArticleDetail", new { id = createLikeVm.ArticleID, sayfa = "admin" });
+            return RedirectToAction("ArticleDetail", new { id = createLikeVm.ArticleID, sayfa = "user" });
         }
         
 

@@ -10,7 +10,14 @@
                     <!-- Post title-->
                     <h1 class="fw-bolder mb-1">@Model.Title</h1>
                     <!-- Post meta content-->
-                    <div class="text-muted fst-italic mb-2">Yayınlanma Tarihi , @Model.CreatedDate.ToShortDateString()</div>
+                    <div class="row text-muted fst-italic mb-2">
+                        <div class="col-md-6">
+                            Yayınlanma Tarihi , @Model.CreatedDate.ToShortDateString() 
+                        </div>
+                        <div class="col-md-6">
+                            <span class="float-right">  Okunma Süresi , @Model.ReadTime dk</span>
+                        </div>
+                    </div> 
                     <!-- Post categories-->
                     @foreach (var category in Model.ArticleCategories.Select(x => x.Category))
                     {
@@ -20,33 +27,42 @@
                 <!-- Preview image figure-->
                 <figure class="mb-4"><img class="img-fluid rounded" src="@Model.ImagePath" alt="..." /></figure>
                 <!-- Post content-->
-                <section class="mb-5">
-                    <p class="fs-5 mb-4">@Model.Content</p>
+                <section class="mb-2">
+                    <div class="form-group">
+                        <label asp-for="Content"></label>
+                        <textarea rows="15" cols="30" asp-for="Content" class="form-control"></textarea>
+                    </div> 
                 </section>
-                
-            </article> 
-            <section class="mb-3">
-                <form method="post" asp-action="AddToLike" class="mb-4">
-                    <input type="hidden" name="AppUserID" value="@Model.AppUserID" />
-                    <input type="hidden" name="ArticleID" value="@Model.ID" />
-                    @if (Model.Likes.Any(x => x.AppUserID == Model.AppUserID))
-                    {
-                        <input type="hidden" name="Type" value="Vazgeç"/>
-                        <button type="submit" class="btn btn-warning">Vazgeç
-                            <span class="badge badge-dark badge-pill">@Model.Likes.Count</span>
-                        </button>
-                    }
-                    else
-                    {
-                        <text>
-                            <input type="hidden" name="Type" value="Beğen"/>
-                            <button type="submit" class="btn btn-danger">
-                                Beğen <span class="badge badge-dark badge-pill">@Model.Likes.Count</span>
-                            </button>
-                        </text>
-                    }
-                </form>
-            </section>
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <span class="text-muted fst-italic mb-2">Okunma Sayısı, @Model.ReadCount</span>
+                    </div>
+                    <div class="col-md-6">
+                        <form method="post" asp-action="AddToLike" class="mb-4">
+                            <input type="hidden" name="AppUserID" value="@Model.AppUserID"/>
+                            <input type="hidden" name="ArticleID" value="@Model.ID"/>
+                            @if (Model.Likes.Any(x => x.AppUserID == Model.AppUserID))
+                            {
+                                <input type="hidden" name="Type" value="cancel"/>
+                                <button type="submit" class="btn btn-warning float-right">
+                                    Beğeni Geri Al
+                                    <span class="badge badge-dark badge-pill">@Model.Likes.Count</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <text>
+                                    <input type="hidden" name="Type" value="like"/>
+                                    <button type="submit" class="btn btn-danger float-right">
+                                        Beğen <span class="badge badge-dark badge-pill">@Model.Likes.Count</span>
+                                    </button>
+                                </text>
+                            }
+                        </form>
+                    </div>
+                </div> 
+            </article>
+ 
             <!-- Comments section-->
             <section class="mb-5">
                 <div class="card bg-light">

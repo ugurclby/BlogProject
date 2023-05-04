@@ -1,0 +1,43 @@
+﻿@using Blog.Model.Entities.Enums
+@model List<Category>  
+<div class="card col-md-12 mt-5">
+    <div class="card-body">
+        <div class="card-text"> <h3>Kategori Listesi</h3></div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Kategori Adı</th>
+                <th>Açıklama</th>
+                <th>Takipçi Sayısı</th>
+                <th>Makale Sayısı</th>
+                <th>Statu</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.UserFollowedCategories.Count</td>
+                    <td>@item.ArticleCategories.Count</td>
+                    <td>@item.StatuDescription</td>
+                    <td>
+                        @if (item.Statu == Statu.Active || item.Statu == Statu.Modified)
+                        {
+                            <a asp-action="CategoryPassive" asp-route-id="@item.ID" class="btn btn-danger btn-sm">Pasif Et</a>
+                        }
+                        else if (item.Statu == Statu.Passive)
+                        {
+                                <a asp-action="CategoryActive" asp-route-id="@item.ID" class="btn btn-success btn-sm">Aktif Et</a>
+                        }
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+
+    </div>
+</div> 

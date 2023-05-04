@@ -19,11 +19,16 @@ namespace Blog.Web.Views.Shared.Components.Articles
         } 
         public IViewComponentResult Invoke(int articleId,string sayfa)
         {
+
+            
+
             var article = _articleRepository.GetByDefaults(article => article, 
                 article => article.ID == articleId,
                 articles =>articles.Include(z=>z.Comments).ThenInclude(i=>i.Appuser).
                     Include(t=>t.Likes).ThenInclude(u=>u.Appuser).
                     Include(x=>x.ArticleCategories).ThenInclude(y=>y.Category)).FirstOrDefault();
+            article.ReadCount += 1;
+            _articleRepository.Update(article);
             ViewBag.Sayfa= sayfa;
             
             return View(article);

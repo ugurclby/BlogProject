@@ -10,6 +10,7 @@ using System.Data;
 using Blog.Web.Areas.Admin.Models;
 using Blog.Dal.Repositories.Concrete;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
@@ -26,6 +27,34 @@ namespace Blog.Web.Areas.Admin.Controllers
             _mapper = mapper;
             _categoryRepository = categoryRepository; 
         }
+
+        public IActionResult CategoryList()
+        {
+           var categoryList= _categoryRepository.GetByDefaults(category => category,x=>x.ID>0,queryable => queryable.Include(category => category.UserFollowedCategories).Include(category => category.ArticleCategories));
+            return View(categoryList);
+        }
+        public IActionResult CategoryActive(int id)
+        {
+            var category = _categoryRepository.GetDefault(x => x.ID == id);
+            if (category != null)
+            {
+                category.Statu = Statu.Active;
+                _categoryRepository.UpdateApproval(category);
+            }
+            return RedirectToAction("CategoryList");
+        }
+        public async Task<IActionResult> CategoryPassive(int id)
+        {
+            var category = _categoryRepository.GetDefault(x => x.ID == id);
+            if (category != null)
+            {
+                category.Statu = Statu.Passive;
+                _categoryRepository.UpdateApproval(category);
+            }
+            return RedirectToAction("CategoryList");
+        }
+        
+
         public IActionResult ConfirmationCategoryList()
         {
             var categories= _categoryRepository.GetDefaults(category => category.Statu == Statu.Confirmation); 

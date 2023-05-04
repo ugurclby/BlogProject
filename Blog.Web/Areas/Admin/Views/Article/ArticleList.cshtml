@@ -1,0 +1,53 @@
+﻿@using Blog.Model.Entities.Enums
+@model List<Article>  
+<div class="card col-md-12 mt-5">
+    <div class="card-body">
+        <div class="card-text"> <h3>Makale Listesi</h3></div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Makale Başlık</th>
+                <th>Yazar</th>
+                <th>Yayınlanma Tarihi</th> 
+                <th>Statu</th>
+                <th>Okunma Sayısı</th>
+                <th>Okunma Süresi</th>
+                <th>Beğeni Sayısı</th>
+                <th>Yorum Sayısı</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Appuser.FullName</td>
+                    <td>@item.CreatedDate.ToShortDateString()</td> 
+                    <td>@item.StatuDescription</td>
+                    <td>@item.ReadCount</td>
+                    <td>@item.ReadTime</td>
+                    <td>@item.Likes.Count</td>
+                    <td>@item.Comments.Count</td>
+                    <td>
+                        @if (item.Statu == Statu.Active || item.Statu == Statu.Modified)
+                        {
+                            <a asp-action="ArticlePassive" asp-route-id="@item.ID" class="btn btn-danger btn-sm">Pasif Et</a>
+                        }
+                        else if (item.Statu == Statu.Passive)
+                        {
+                            <a asp-action="ArticleActive" asp-route-id="@item.ID" class="btn btn-success btn-sm">Aktif Et</a>
+                        }
+                    </td>
+                    <td>
+                            <a asp-action="ArticleDetail" asp-route-id="@item.ID" asp-route-sayfa="user" class="btn btn-info btn-sm">İncele</a>
+                    </td>
+                    
+                </tr>
+            }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

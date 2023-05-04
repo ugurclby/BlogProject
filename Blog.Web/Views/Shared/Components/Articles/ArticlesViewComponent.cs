@@ -22,8 +22,9 @@ namespace Blog.Web.Views.Shared.Components.Articles
             _articleRepository = articleRepository;
         }
 
-        public IViewComponentResult Invoke(int categoryId)
+        public IViewComponentResult Invoke(int categoryId,string Controller)
         { 
+            ViewBag.Controller=Controller;
             List<GetArticleWithUser> list = _articleRepository.GetByDefaults
                 (
                     selector: a=> new GetArticleWithUser() 

@@ -19,6 +19,7 @@ using System.Linq;
 using Blog.Dal.Context;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Blog.Dal.Repositories.Concrete;
+using Blog.Web.Models.VMs;
 
 namespace Blog.Web.Areas.Member.Controllers
 {
@@ -29,16 +30,43 @@ namespace Blog.Web.Areas.Member.Controllers
         private readonly UserManager<Appuser> _userManager;
         private readonly IArticleRepository _articleRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IArticleCategoryRepository _articleCategoryRepository;
+        private readonly ICommentRepository _commentRepository;
+        private readonly ILikeRepository _likeRepository;
+        private readonly IArticleCategoryRepository _articleCategoryRepository; 
         private readonly IMapper _mapper; 
 
-        public ArticleController(UserManager<Appuser> userManager, IArticleRepository articleRepository, ICategoryRepository categoryRepository, IMapper mapper, IArticleCategoryRepository articleCategoryRepository, ProjectContext db)
+        public ArticleController(UserManager<Appuser> userManager, IArticleRepository articleRepository, ICategoryRepository categoryRepository, IMapper mapper, IArticleCategoryRepository articleCategoryRepository,  ICommentRepository commentRepository,ILikeRepository likeRepository)
         {
             _userManager = userManager;
             _articleRepository = articleRepository;
             _categoryRepository = categoryRepository;
             _mapper = mapper;
-            _articleCategoryRepository = articleCategoryRepository; 
+            _articleCategoryRepository = articleCategoryRepository;
+            _commentRepository = commentRepository;
+            _likeRepository= likeRepository;
+        }
+        public IActionResult ArticleDetail(int id, string sayfa)
+        {
+            ViewBag.ArticleId = id;
+            ViewBag.Sayfa = sayfa;
+            return View();
+        }
+        public IActionResult AddToComment(CreateCommentVM createCommentVm)
+        {
+            _commentRepository.Create(_mapper.Map<Comment>(createCommentVm));
+            return RedirectToAction("ArticleDetail", new { id = createCommentVm.ArticleID, sayfa = "user" });
+        }
+        public IActionResult AddToLike(CreateLikeVM createLikeVm)
+        {
+            if (createLikeVm.Type.Equals("cancel"))
+            {
+                _likeRepository.Delete(_mapper.Map<Like>(createLikeVm));
+                return RedirectToAction("ArticleDetail", new { id = createLikeVm.ArticleID, sayfa = "user" });
+            }
+
+            _likeRepository.Create(_mapper.Map<Like>(createLikeVm));
+
+            return RedirectToAction("ArticleDetail", new { id = createLikeVm.ArticleID, sayfa = "user" });
         }
 
         public async Task<IActionResult> Create()
@@ -73,6 +101,7 @@ namespace Blog.Web.Areas.Member.Controllers
                 image.Save($"wwwroot/images/{guid}.jpg");
                 article.ImagePath = $"/images/{guid}.jpg";
 
+                article.ReadTime = (vm.Content.Length / 100) * 2;
 
                 if (vm.CategoryID.Length > 0)
                 {
@@ -169,8 +198,8 @@ namespace Blog.Web.Areas.Member.Controllers
 
                 articlefromDb.Title = vm.Title;
                 articlefromDb.Content = vm.Content;
-                articlefromDb.ImagePath = vm.ImagePath; 
-
+                articlefromDb.ImagePath = vm.ImagePath;
+                articlefromDb.ReadTime = (vm.Content.Length / 100) * 2;
                 _articleRepository.Update(articlefromDb);
                
                 return RedirectToAction("List");
