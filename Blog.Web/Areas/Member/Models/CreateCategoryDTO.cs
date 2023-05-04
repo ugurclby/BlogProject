@@ -10,6 +10,6 @@ namespace Blog.Web.Areas.Member.Models
 
         [Required(ErrorMessage = "Bu alan boş olmaz")]
         [MinLength(7,ErrorMessage ="En az 7 karakter yazmalısınız.")]
-        public string Description { get; set; }
+        public string Description { get; set; } 
     }
 }

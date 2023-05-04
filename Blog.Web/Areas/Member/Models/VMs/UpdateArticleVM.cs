@@ -24,6 +24,7 @@ namespace Blog.Web.Areas.Member.Models.VMs
         //[Required(ErrorMessage = "Fotoğraf seçmelisiniz !")]
         public IFormFile Image { get; set; }
 
+        [Display(Name = "Geçerli Fotoğraf")]
         public string ImagePath { get; set; }
         
         // CATEGORY

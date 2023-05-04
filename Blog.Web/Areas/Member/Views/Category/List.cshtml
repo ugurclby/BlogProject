@@ -1,5 +1,5 @@
-﻿@model List<Category> 
-<div class="card col-md-8 mt-5">
+﻿@model List<Category>  
+<div class="card col-md-8 offset-2 mt-5">
     <div class="card-body">
         <div class="card-text"><h3>Kategori Listeleme Paneli</h3></div>
         <p>
@@ -20,19 +20,21 @@
                     <tr>
                         <td>@item.Name</td>
                         <td>@item.StatuDescription</td>
-                        <td>
-                            <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-success">Güncelle</a>
+                        <td> 
                             @if (item.UserFollowedCategories.Any(x => x.CategoryID == item.ID && x.AppUserID == ViewBag.UserId))
                             {
-                                <text><a asp-action="UnFollow" asp-route-id="@item.ID" class="btn btn-info">Takibi Bırak</a></text>
-
+                                 <a asp-action="UnFollow" asp-route-id="@item.ID" class="btn btn-info">Takibi Bırak</a> 
                             }
                             else
                             {
-                                <text><a asp-action="Follow" asp-route-id="@item.ID" class="btn btn-info">Takip Et</a>  </text>
+                                <a asp-action="Follow" asp-route-id="@item.ID" class="btn btn-info">Takip Et</a>  
                             }
-
-                            <a href="" data-toggle="modal" data-target="#silModal" data-id="@item.ID" class="btn btn-danger btn-sm">Sil</a>
+                            @if (item.AppUserID == @ViewBag.UserId.ToString())
+                            {
+                                <a asp-action="Update" asp-route-id="@item.ID" class="btn btn-success">Güncelle</a>
+                                <a href="" data-toggle="modal" data-target="#silModal" data-id="@item.ID" class="btn btn-danger btn-sm">Sil</a>
+                            } 
+                            
                         </td>
                     </tr>
                 }
@@ -41,8 +43,7 @@
         </table>
 
     </div>
-</div>
-</div>
+</div> 
 
 <div class="modal fade" id="silModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -62,6 +63,7 @@
             </div>
         </div>
     </div>
+</div>
 
     @section Scripts{
         <script type="text/javascript">
@@ -77,9 +79,14 @@
                             data: { id: id },
                             dataType: "json",
                             contentType: "application/json; charset=utf-8;",
-                            success: function () {
-                                //alert("işlem tamam");
-                                window.location.reload();
+                            success: function (data) {
+                                debugger; 
+                                if(data.message =='') {
+                                    window.location.reload();
+                                }else {
+                                    alert(data.message);
+                                }                
+                                    
                             },
                             error: function (error) {
                                 alert(error.statusText);

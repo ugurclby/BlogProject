@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog.Dal.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20230430132450_create_db_2")]
-    partial class create_db_2
+    [Migration("20230504214929_addColumn")]
+    partial class addColumn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,10 +138,10 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "102485ef-40d6-4d4c-95b6-295011e265d4",
+                            Id = "5f4189e0-303d-4b30-9429-8f40e1478583",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d921fa03-d7ad-4cee-984c-23a8e05af793",
-                            CreatedDate = new DateTime(2023, 4, 30, 16, 24, 49, 236, DateTimeKind.Local).AddTicks(7539),
+                            ConcurrencyStamp = "3ea532f3-e130-4785-9ba0-64cc606b3699",
+                            CreatedDate = new DateTime(2023, 5, 5, 0, 49, 29, 344, DateTimeKind.Local).AddTicks(6694),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "admin",
@@ -150,9 +150,9 @@ namespace Blog.Dal.Migrations
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
                             Password = "admin123",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMgaqnH6gXcZiz08Z78DJWkAL1g9wygvyxacExRgtpxrdR6j5FHofIZiptSeoH5/rQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEEfscKoQ/iETYPpZsrMp3kiiMDsYnZK8sS0tZxDujYIcn3KT5Ll+nTL73HmTxc0cg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a00b0114-32a4-4569-805a-8b822d5b32c7",
+                            SecurityStamp = "a1add38d-a2a8-46a8-a233-28e2536a7686",
                             Statu = 1,
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
@@ -235,6 +235,9 @@ namespace Blog.Dal.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AppUserID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -248,6 +251,8 @@ namespace Blog.Dal.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AppUserID");
 
                     b.ToTable("Categories");
                 });
@@ -267,6 +272,9 @@ namespace Blog.Dal.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Deneme")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Statu")
                         .HasColumnType("int");
@@ -369,15 +377,15 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f20744a0-0e77-463c-ae85-6b50f6a1df1c",
-                            ConcurrencyStamp = "609c411a-6455-4762-90f9-3400f5aaa8cb",
+                            Id = "bc58d50f-5fd3-4419-a5b0-22c7c2cdb2ef",
+                            ConcurrencyStamp = "4e6a1b4c-2deb-41ac-84fd-e1c3539148fc",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "da0c2544-2a84-4505-834c-823358b833e1",
-                            ConcurrencyStamp = "88e3bef0-5ae2-4714-9203-04c4a7be931b",
+                            Id = "221b04d4-b906-44cf-8442-542d1b739bb9",
+                            ConcurrencyStamp = "d289f318-b87c-43ae-86ae-73e985256d1f",
                             Name = "member",
                             NormalizedName = "MEMBER"
                         });
@@ -470,8 +478,8 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "102485ef-40d6-4d4c-95b6-295011e265d4",
-                            RoleId = "f20744a0-0e77-463c-ae85-6b50f6a1df1c"
+                            UserId = "5f4189e0-303d-4b30-9429-8f40e1478583",
+                            RoleId = "bc58d50f-5fd3-4419-a5b0-22c7c2cdb2ef"
                         });
                 });
 
@@ -507,7 +515,7 @@ namespace Blog.Dal.Migrations
                     b.HasOne("Blog.Model.Entities.Concrete.Article", "Article")
                         .WithMany("ArticleCategories")
                         .HasForeignKey("ArticleID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Blog.Model.Entities.Concrete.Category", "Category")
@@ -515,6 +523,13 @@ namespace Blog.Dal.Migrations
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Blog.Model.Entities.Concrete.Category", b =>
+                {
+                    b.HasOne("Blog.Model.Entities.Concrete.Appuser", "Appuser")
+                        .WithMany("Categories")
+                        .HasForeignKey("AppUserID");
                 });
 
             modelBuilder.Entity("Blog.Model.Entities.Concrete.Comment", b =>

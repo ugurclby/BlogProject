@@ -45,7 +45,7 @@ namespace Blog.Dal.Repositories.Concrete
                     }
                 )
                 .Where(fullEntry => 
-                    fullEntry.CategoryStatu == Statu.Active || fullEntry.CategoryStatu == Statu.Modified)
+                    (fullEntry.CategoryStatu == Statu.Active || fullEntry.CategoryStatu == Statu.Modified) && fullEntry.ArticleCount>0 )
                 .Distinct()
                 .ToList();
             return categoryFilters;

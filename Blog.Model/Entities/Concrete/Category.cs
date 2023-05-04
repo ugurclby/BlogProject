@@ -26,5 +26,11 @@ namespace Blog.Model.Entities.Concrete
         // Makale ile kategori arasında çoktan çoğa ilişki kurmak için
         public List<ArticleCategory> ArticleCategories { get; set; }
 
+        // 1 kategorinin 1 oluşturan kullanıcısı 
+
+        public string AppUserID { get; set; }
+
+        public Appuser Appuser { get; set; }
+
     }
 }

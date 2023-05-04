@@ -70,9 +70,10 @@ namespace Blog.Dal.Repositories.Abstract
 
         public void Update(T entity)
         {
-            //_context.Entry(entity).State = EntityState.Modified;
-            entity.Statu = Statu.Modified;
-            //_table.Attach(entity);
+            if (entity.Statu != Statu.Confirmation ) // Admin onayına giden bir obje , güncellendiği zaman statusu değişip onay sürecini atlamasın diye yazıldı.
+            {
+                entity.Statu = Statu.Modified;
+            } 
             _table.Update(entity); 
             _context.SaveChanges();
         }

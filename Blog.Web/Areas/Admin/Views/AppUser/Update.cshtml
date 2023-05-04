@@ -1,8 +1,8 @@
-﻿@model AdminRegisterUpdateDTO 
-    <div class="card col-md-12 mt-5">
+﻿@model AdminRegisterUpdateDTO
+<div class="card col-md-8 offset-2 mt-5">
         <div class="card-body">
             <div class="card-text">
-                <h2>Admin Bilgileri</h2>
+                <h3>Admin Bilgileri</h3>
             </div>
             <form>
                 <div class="form-group">
@@ -24,11 +24,7 @@
                 <div class="form-group">
                     <label asp-for="Email"></label>
                     <input type="text" class="form-control" asp-for="Email" disabled="disabled" autocomplete="off" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="ImagePath"></label>
-                    <img src="@Model.ImagePath" asp-append-version="true" />
-                </div>
+                </div> 
             </form>
         </div>
     </div> 

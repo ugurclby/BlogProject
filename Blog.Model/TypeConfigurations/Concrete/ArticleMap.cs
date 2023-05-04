@@ -33,10 +33,7 @@ namespace Blog.Model.TypeConfigurations.Concrete
             * 
             * SETNULL => Defaulttaki silinme davranışıdır. FK(foreign keyi) boş geeçebilmemizi sağlar. (nortwinddedi catrgory-product gibi)
              
-             */
-
-
-
+             */  
 
             base.Configure(builder);
         }

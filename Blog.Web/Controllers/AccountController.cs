@@ -85,22 +85,29 @@ namespace Blog.Web.Controllers
                         ModelState.AddModelError("", "Kullanıcı Onayınız Henüz Tamamlanmamıştır.");
                         return View(dto);
                     }
-
-                    SignInResult result = await _signInManager.PasswordSignInAsync(appuser.UserName, dto.Password, false, false);
-                    if (result.Succeeded)
-                    { 
-                        var roles = await _userManager.GetRolesAsync(appuser);
-
-                        if (roles.Contains("admin"))
+                    else if (appuser.Statu == Statu.Passive)
+                    {
+                        ModelState.AddModelError("", "Kullanıcınız Pasif Edilmiştir.");
+                        return View(dto);
+                    }
+                    else
+                    {
+                        SignInResult result = await _signInManager.PasswordSignInAsync(appuser.UserName, dto.Password, false, false);
+                        if (result.Succeeded)
                         {
-                            return Redirect(dto.ReturnUrl ?? "/admin/appuser/index");
+                            var roles = await _userManager.GetRolesAsync(appuser);
+
+                            if (roles.Contains("admin"))
+                            {
+                                return Redirect(dto.ReturnUrl ?? "/admin/appuser/index");
+                            }
+                            else
+                            {
+                                return Redirect(dto.ReturnUrl ?? "/member/appuser/index");
+                            }
                         }
-                        else
-                        {
-                            return Redirect(dto.ReturnUrl ?? "/member/appuser/index");
-                        }
+                        ModelState.AddModelError("", "Kullanıcı Adı Ve Şifre Hatalı.");
                     } 
-                    ModelState.AddModelError("", "Kullanıcı Adı Ve Şifre Hatalı.");
                 }
                 else
                 {

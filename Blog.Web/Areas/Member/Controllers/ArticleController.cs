@@ -216,5 +216,18 @@ namespace Blog.Web.Areas.Member.Controllers
 
             return View(vm);
         }
+        public IActionResult Delete(int id)
+        {
+            Article article = _articleRepository.GetByDefault(a => a, a => a.ID == id, queryable => queryable.Include(x => x.ArticleCategories));
+
+            if (article != null)
+            { 
+                _articleRepository.Delete(article);
+            }
+            return Json(new
+            {
+                message = ""
+            });
+        } 
     }
 }

@@ -19,7 +19,7 @@ namespace Blog.Model.Entities.Concrete
         public int ArticleID { get; set; }
         public Article  Article { get; set; }
 
-
+        public string Deneme { get; set; }
 
     }
 }
