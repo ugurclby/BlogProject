@@ -43,7 +43,7 @@ namespace Blog.Web.Areas.Admin.Controllers
             }
             return RedirectToAction("CategoryList");
         }
-        public async Task<IActionResult> CategoryPassive(int id)
+        public IActionResult CategoryPassive(int id)
         {
             var category = _categoryRepository.GetDefault(x => x.ID == id);
             if (category != null)

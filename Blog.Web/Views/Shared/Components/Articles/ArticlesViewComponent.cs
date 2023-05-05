@@ -22,9 +22,9 @@ namespace Blog.Web.Views.Shared.Components.Articles
             _articleRepository = articleRepository;
         }
 
-        public IViewComponentResult Invoke(int categoryId,string Controller)
+        public IViewComponentResult Invoke(int categoryId, int takeNumber=9)
         { 
-            ViewBag.Controller=Controller;
+
             List<GetArticleWithUser> list = _articleRepository.GetByDefaults
                 (
                     selector: a=> new GetArticleWithUser() 
@@ -41,18 +41,19 @@ namespace Blog.Web.Views.Shared.Components.Articles
                     expression: a=> a.Statu == Model.Entities.Enums.Statu.Modified || a.Statu == Model.Entities.Enums.Statu.Active,
                     include : a=> a.Include(a=>a.Appuser).Include(a=>a.ArticleCategories),
                     orderBy: a=>a.OrderByDescending(a=>a.CreatedDate)
-                ).Take(9).ToList();
+                ).ToList();
+
+            // take yukarıdaki kod bloğundan çıkarılmıştır. Çünkü son yazılan 9 ya da 5 makeleyi
+            // çekip onların üzerinden category id bazlı sorgulama yapıldığında sonuç dönmüyordu. 
 
             if (categoryId>0)
             {
-                return View(list.Where(x => x.ArticleCategories.Any(y => y.CategoryID == categoryId)).Take(9).ToList());
+                return View(list.Where(x => x.ArticleCategories.Any(y => y.CategoryID == categoryId)).Take(takeNumber).ToList());
             }
-
-            return View(list);
-        }
-
-
-
-
+            else
+            {
+                return View(list.Take(takeNumber).ToList());
+            } 
+        } 
     }
 }

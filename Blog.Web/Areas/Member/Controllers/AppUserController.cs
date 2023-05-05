@@ -34,13 +34,15 @@ namespace Blog.Web.Areas.Member.Controllers
             _appUserRepository = appUserRepository;
             _usedPasswordRepository = usedPasswordRepository;
         } 
-        public IActionResult Index(int? categoryId)
+        public async Task<IActionResult> Index(int? categoryId)
         {
             ViewBag.CategoryId = 0;
+            Appuser appuser = await _userManager.GetUserAsync(User);
+            ViewBag.CategoryAppUserId = appuser.Id;
             if (categoryId.HasValue)
             {
                 ViewBag.CategoryId = categoryId.Value;
-            }
+             }
             return View();
         }
         public async Task<IActionResult> LogOut()
@@ -57,7 +59,7 @@ namespace Blog.Web.Areas.Member.Controllers
             return View(register);
         }
         [HttpPost]
-        public async Task<IActionResult> Update(RegisterUpdateDTO dto)
+        public IActionResult Update(RegisterUpdateDTO dto)
         {
             bool isChangedPass=false;
             

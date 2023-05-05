@@ -30,7 +30,7 @@ namespace Blog.Web.Controllers
             ViewBag.CategoryId = 0;
             if (categoryId.HasValue)
             {
-                ViewBag.CategoryId = categoryId.Value;
+                ViewBag.CategoryId = categoryId;
             }
             return View();
         }

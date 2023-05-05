@@ -6,19 +6,19 @@ using Blog.Model;
 using Blog.Model.Entities.Enums;
 using Blog.Web.Models.DTOs;
 
-namespace Blog.Web.Views.Shared.Components.CategoryList
+namespace Blog.Web.Views.Shared.Components.FollowCategoryList
 {
-    public class CategoryListViewComponent:ViewComponent
+    public class FollowCategoryListViewComponent : ViewComponent
     {
         private readonly ICategoryRepository _categoryRepository;
-        public CategoryListViewComponent(ICategoryRepository categoryRepository)
+        public FollowCategoryListViewComponent(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(string CategoryAppUserId)
         {
-            var list = _categoryRepository.GetCategoriesWithArticleCount(); 
+            var list = _categoryRepository.GetCategoriesWithNoArticleCount(CategoryAppUserId); 
             return View(list);  
         }
     }

@@ -10,6 +10,7 @@ namespace Blog.Dal.Repositories.Interfaces.Concrete
 {
     public interface ICategoryRepository : IBaseRepository<Category>
     {
-        public List<CategoryFilterDto> GetCategoriesWithBlogCount();
+        public List<CategoryFilterDto> GetCategoriesWithArticleCount();
+        public List<FollowCategoryFilterDto> GetCategoriesWithNoArticleCount(string CategoryAppUserId); 
     }
 }

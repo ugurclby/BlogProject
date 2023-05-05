@@ -3,6 +3,12 @@
         @await Component.InvokeAsync("Articles",new{categoryId=(int)ViewBag.CategoryId})
     </div>
     <div id="Dv_Categories" class="col-lg-4">
-        @await Component.InvokeAsync("CategoryList")
+        <div class="mb-5">
+            @await Component.InvokeAsync("CategoryList")
+        </div>
+        <div class="mb-5">
+            @await Component.InvokeAsync("FollowCategoryList",new{CategoryAppUserId=ViewBag.CategoryAppUserId.ToString()})
+        </div>
+        
     </div>
 </div>
