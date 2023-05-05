@@ -9,14 +9,11 @@ namespace Blog.Dal.Repositories.Interfaces.Concrete
     public interface IAppUserRepository
     {
 
-        Task<List<string>> Create(Appuser appuser);
-
-        void Delete(Appuser appuser);
-
+        Task<List<string>> Create(Appuser appuser); 
+        void Delete(Appuser appuser); 
         int Update(Appuser appuser);
-        int UpdateApproval(Appuser appuser); 
-
-        List<Appuser> OnayBekleyenKullaniciListesi();
-
+        int UpdateApproval(Appuser appuser);  
+        List<Appuser> OnayBekleyenKullaniciListesi(); 
+        Appuser GeAppUserById(string appUserId);
     }
 }

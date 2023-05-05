@@ -12,12 +12,12 @@
                     <!-- Post meta content-->
                     <div class="row text-muted fst-italic mb-2">
                         <div class="col-md-6">
-                            Yayınlanma Tarihi , @Model.CreatedDate.ToShortDateString() 
+                            Yayınlanma Tarihi , @Model.CreatedDate.ToShortDateString()
                         </div>
                         <div class="col-md-6">
                             <span class="float-right">  Okunma Süresi , @Model.ReadTime dk</span>
                         </div>
-                    </div> 
+                    </div>
                     <!-- Post categories-->
                     @foreach (var category in Model.ArticleCategories.Select(x => x.Category))
                     {
@@ -30,67 +30,72 @@
                 <section class="mb-2">
                     <div class="form-group">
                         <label asp-for="Content"></label>
-                        <textarea rows="15" cols="30" asp-for="Content" class="form-control"></textarea>
-                    </div> 
+                        <textarea rows="15" cols="30" asp-for="Content" class="form-control" readonly="readonly"></textarea>
+                    </div>
                 </section>
                 <div class="row mb-5">
                     <div class="col-md-6">
                         <span class="text-muted fst-italic mb-2">Okunma Sayısı, @Model.ReadCount</span>
                     </div>
-                    <div class="col-md-6">
-                        <form method="post" asp-action="AddToLike" class="mb-4">
-                            <input type="hidden" name="AppUserID" value="@Model.AppUserID"/>
-                            <input type="hidden" name="ArticleID" value="@Model.ID"/>
-                            @if (Model.Likes.Any(x => x.AppUserID == Model.AppUserID))
-                            {
-                                <input type="hidden" name="Type" value="cancel"/>
-                                <button type="submit" class="btn btn-warning float-right">
-                                    Beğeni Geri Al
-                                    <span class="badge badge-dark badge-pill">@Model.Likes.Count</span>
-                                </button>
-                            }
-                            else
-                            {
-                                <text>
-                                    <input type="hidden" name="Type" value="like"/>
-                                    <button type="submit" class="btn btn-danger float-right">
-                                        Beğen <span class="badge badge-dark badge-pill">@Model.Likes.Count</span>
-                                    </button>
-                                </text>
-                            }
-                        </form>
-                    </div>
-                </div> 
-            </article>
- 
-            <!-- Comments section-->
-            <section class="mb-5">
-                <div class="card bg-light">
-                    <div class="card-body">
-                        <!-- Comment form-->
-                        <form method="post" asp-action="AddToComment" class="mb-4">
-                            <div class="form-group">
-                                <textarea name="Text" class="form-control" rows="4" placeholder="Yorum Yaz.."></textarea>
-                                <input type="hidden" name="AppUserID" value="@Model.AppUserID" />
+                    @if (ViewBag.Sayfa == "user")
+                    {
+                        <div class="col-md-6">
+                            <form method="post" asp-action="AddToLike" class="mb-4">
+                                <input type="hidden" name="AppUserID" value="@ViewBag.CurrentAppUserID" />
                                 <input type="hidden" name="ArticleID" value="@Model.ID" />
-                            </div>
-                            <div class="form-group mt-2">
-                                <input type="submit" class="btn btn-success" value="Gönder" />
-                            </div>
-                        </form>
-
-                        @foreach (var comment in Model.Comments)
-                        {
-                            <div class="d-flex">
-                                <div class="ms-3">
-                                    <div class="fw-bold">@comment.Appuser.FullName</div>
-                                    @comment.Text
-                                </div>
-                            </div>
-                        }
-                    </div>
+                                @if (Model.Likes.Any(x => x.AppUserID == ViewBag.CurrentAppUserID))
+                                {
+                                    <input type="hidden" name="Type" value="cancel" />
+                                    <button type="submit" class="btn btn-warning float-right">
+                                        Beğeni Geri Al
+                                        <span class="badge badge-dark badge-pill">@Model.Likes.Count</span>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <text>
+                                        <input type="hidden" name="Type" value="like" />
+                                        <button type="submit" class="btn btn-danger float-right">
+                                            Beğen <span class="badge badge-dark badge-pill">@Model.Likes.Count</span>
+                                        </button>
+                                    </text>
+                                }
+                            </form>
+                        </div>
+                    }
                 </div>
-            </section>
+            </article>
+            @if (ViewBag.Sayfa == "user")
+            {
+                <!-- Comments section-->
+                <section class="mb-5">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <!-- Comment form-->
+                            <form method="post" asp-action="AddToComment" class="mb-4">
+                                <div class="form-group">
+                                    <textarea name="Text" class="form-control" rows="4" placeholder="Yorum Yaz.."></textarea>
+                                    <input type="hidden" name="AppUserID" value="@Model.AppUserID" />
+                                    <input type="hidden" name="ArticleID" value="@Model.ID" />
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="submit" class="btn btn-success" value="Gönder" />
+                                </div>
+                            </form> 
+
+                            @foreach (var comment in Model.Comments)
+                            {
+                                <div class="d-flex">
+                                    <div class="ms-3">
+                                        <div class="fw-bold">@comment.Appuser.FullName</div>
+                                        @comment.Text
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </section>
+            }
         </div>
 
     </div>

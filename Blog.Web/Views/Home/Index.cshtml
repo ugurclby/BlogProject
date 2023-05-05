@@ -1,7 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}  
-<div class="row">
+﻿<div class="row">
     <div id="Dv_Article" class="col-lg-8">
         @await Component.InvokeAsync("Articles",new{categoryId=(int)ViewBag.CategoryId})
     </div>

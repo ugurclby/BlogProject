@@ -10,6 +10,7 @@ using Blog.Model.Entities.Concrete;
 using Blog.Web.Models.VMs;
 using Blog.Dal.Repositories.Concrete;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
@@ -22,14 +23,15 @@ namespace Blog.Web.Areas.Admin.Controllers
         private readonly IArticleRepository _articleRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly ILikeRepository _likeRepository;
+        private readonly UserManager<Appuser> _userManager;
 
-
-        public ArticleController(IMapper mapper, IArticleRepository articleRepository, ICommentRepository commentRepository, ILikeRepository likeRepository)
+        public ArticleController(IMapper mapper, IArticleRepository articleRepository, ICommentRepository commentRepository, ILikeRepository likeRepository, UserManager<Appuser> userManager)
         {
             _mapper = mapper;
             _articleRepository = articleRepository;
             _commentRepository = commentRepository;
             _likeRepository = likeRepository;
+            _userManager = userManager;
         }
 
         public IActionResult ArticleList()
@@ -97,10 +99,12 @@ namespace Blog.Web.Areas.Admin.Controllers
             }
             return Json(null);
         }
-        public IActionResult ArticleDetail(int id,string sayfa= "user")
+        public async Task<IActionResult> ArticleDetail(int id,string sayfa= "user")
         {
+            Appuser appuser = await _userManager.GetUserAsync(User);
             ViewBag.ArticleId = id;
-            ViewBag.Sayfa=sayfa;
+            ViewBag.Sayfa = sayfa;
+            ViewBag.SessionUserID = appuser.Id;
             return View();
         }
         public IActionResult AddToComment(CreateCommentVM createCommentVm)

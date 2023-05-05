@@ -25,10 +25,12 @@ namespace Blog.Dal.Context
         public DbSet<UserFollowedCategory> UserFollowedCategories { get; set; }
         public DbSet<UsedPassword> UsedPasswords { get; set; }
         
-
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            
+
             builder.ApplyConfiguration(new ArticleMap());
             builder.ApplyConfiguration(new AppUserMap());
             builder.ApplyConfiguration(new ArticleCategoryMap());
@@ -88,6 +90,7 @@ namespace Blog.Dal.Context
 
 
             base.OnModelCreating(builder);
+             
         } 
     }
 }

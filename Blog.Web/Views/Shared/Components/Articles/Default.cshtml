@@ -11,11 +11,10 @@
                         <p class="card-text">@item.Content.Substring(0, 30)</p>
                         <p class="card-text">devamını okumak için <a asp-action="ArticleDetail" asp-controller="Article" asp-route-id="@item.ArticleId">tıklayınız..</a></p>
                         <p class="card-text"><small class="text-muted">Oluşma Tarihi : @item.CreatedDate.ToShortDateString()</small></p>
-                        <a class="btn btn-outline-info" asp-action="Detail" asp-controller="" asp-area="" asp-route-id="@item.AppUserId">Yazar : @item.UserFullName</a>
+                        <a class="btn btn-outline-info" asp-action="UserDetail" asp-controller="AppUser" asp-route-appUserId="@item.AppUserId">Yazar : @item.UserFullName</a>
                     </div>
                 </div>
-            </div>
-
+            </div> 
         }
     </div>
 </div> 

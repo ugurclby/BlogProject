@@ -32,9 +32,14 @@ namespace Blog.Web.Areas.Member.Controllers
             _mapper = mapper;
             _appUserRepository = appUserRepository;
             _usedPasswordRepository = usedPasswordRepository;
-        }
-        public IActionResult Index()
+        } 
+        public IActionResult Index(int? categoryId)
         {
+            ViewBag.CategoryId = 0;
+            if (categoryId.HasValue)
+            {
+                ViewBag.CategoryId = categoryId.Value;
+            }
             return View();
         }
         public async Task<IActionResult> LogOut()
@@ -109,6 +114,11 @@ namespace Blog.Web.Areas.Member.Controllers
                 ViewBag.Message = "Kayıt Başarılı Bir Şekilde Güncellendi";
             }
             return View(dto);
+        }
+        public IActionResult UserDetail(string appUserId)
+        {
+            ViewBag.AppUserId = appUserId;
+            return View();
         }
 
     }

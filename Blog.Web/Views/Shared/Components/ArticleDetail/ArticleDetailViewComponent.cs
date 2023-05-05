@@ -7,21 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Blog.Model.Entities.Concrete;
+using Microsoft.AspNetCore.Identity;
 
-namespace Blog.Web.Views.Shared.Components.Articles
+
+namespace Blog.Web.Views.Shared.Components.ArticleDetail
 {
     public class ArticleDetailViewComponent : ViewComponent
     {  
-        private readonly IArticleRepository _articleRepository;
-        public ArticleDetailViewComponent(IArticleRepository  articleRepository)
+        private readonly IArticleRepository _articleRepository;  
+        public ArticleDetailViewComponent(IArticleRepository  articleRepository )
         {
-            _articleRepository = articleRepository;
+            _articleRepository = articleRepository; 
         } 
-        public IViewComponentResult Invoke(int articleId,string sayfa)
-        {
-
-            
-
+        public IViewComponentResult Invoke(int articleId,string SessionUserID, string sayfa)
+        {  
             var article = _articleRepository.GetByDefaults(article => article, 
                 article => article.ID == articleId,
                 articles =>articles.Include(z=>z.Comments).ThenInclude(i=>i.Appuser).
@@ -30,7 +29,7 @@ namespace Blog.Web.Views.Shared.Components.Articles
             article.ReadCount += 1;
             _articleRepository.Update(article);
             ViewBag.Sayfa= sayfa;
-            
+            ViewBag.CurrentAppUserID = SessionUserID;
             return View(article);
         } 
     }

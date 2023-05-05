@@ -80,5 +80,10 @@ namespace Blog.Dal.Repositories.Concrete
         {
             return _table.Where(x => x.Statu == Statu.Confirmation).ToList(); 
         }
+
+        public Appuser GeAppUserById(string appUserId)
+        {
+            return _table.Where(x => x.Id == appUserId).FirstOrDefault();
+        } 
     }
 }

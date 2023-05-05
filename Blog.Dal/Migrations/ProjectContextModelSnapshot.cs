@@ -136,10 +136,10 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5f4189e0-303d-4b30-9429-8f40e1478583",
+                            Id = "6dd80c18-54ec-44e1-9e1d-26ff7e7223d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3ea532f3-e130-4785-9ba0-64cc606b3699",
-                            CreatedDate = new DateTime(2023, 5, 5, 0, 49, 29, 344, DateTimeKind.Local).AddTicks(6694),
+                            ConcurrencyStamp = "5f415ea1-0b11-44e8-bdde-f56250c32019",
+                            CreatedDate = new DateTime(2023, 5, 5, 15, 6, 17, 509, DateTimeKind.Local).AddTicks(8037),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "admin",
@@ -148,9 +148,9 @@ namespace Blog.Dal.Migrations
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
                             Password = "admin123",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEEfscKoQ/iETYPpZsrMp3kiiMDsYnZK8sS0tZxDujYIcn3KT5Ll+nTL73HmTxc0cg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELYh44YQTOQ3hGdrrf/3+0pk6ttkKlYsi0DkstAQNNELvEKU3v2xQOhCbanQ/IyWkA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a1add38d-a2a8-46a8-a233-28e2536a7686",
+                            SecurityStamp = "21338b0b-db12-43b8-9553-010aec3bdd78",
                             Statu = 1,
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
@@ -271,9 +271,6 @@ namespace Blog.Dal.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Deneme")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Statu")
                         .HasColumnType("int");
 
@@ -375,15 +372,15 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bc58d50f-5fd3-4419-a5b0-22c7c2cdb2ef",
-                            ConcurrencyStamp = "4e6a1b4c-2deb-41ac-84fd-e1c3539148fc",
+                            Id = "4e282e3f-ab21-4b66-9331-dd47810fb32a",
+                            ConcurrencyStamp = "0b7946f0-f34f-4153-91d4-6578e9740f1a",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "221b04d4-b906-44cf-8442-542d1b739bb9",
-                            ConcurrencyStamp = "d289f318-b87c-43ae-86ae-73e985256d1f",
+                            Id = "6f9097b9-cac0-4232-bdfa-59f79750c909",
+                            ConcurrencyStamp = "511e4d13-15c4-4225-a3ce-37c632be5726",
                             Name = "member",
                             NormalizedName = "MEMBER"
                         });
@@ -476,8 +473,8 @@ namespace Blog.Dal.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "5f4189e0-303d-4b30-9429-8f40e1478583",
-                            RoleId = "bc58d50f-5fd3-4419-a5b0-22c7c2cdb2ef"
+                            UserId = "6dd80c18-54ec-44e1-9e1d-26ff7e7223d8",
+                            RoleId = "4e282e3f-ab21-4b66-9331-dd47810fb32a"
                         });
                 });
 

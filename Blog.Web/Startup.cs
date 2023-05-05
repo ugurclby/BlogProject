@@ -36,7 +36,7 @@ namespace Blog.Web
             services.AddIdentity<Appuser, IdentityRole>
                 (
                     x=> 
-                    { 
+                    {  
                         x.User.RequireUniqueEmail = true;   // kişiye ait eşsiz mail olsun mu
                         x.Password.RequiredLength = 4;      // şifre kaç karakter
                         x.Password.RequireUppercase = false;    // büyük harf şart mı

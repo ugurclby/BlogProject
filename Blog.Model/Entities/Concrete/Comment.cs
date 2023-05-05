@@ -17,9 +17,7 @@ namespace Blog.Model.Entities.Concrete
         // yorum hangi makale  ait?
 
         public int ArticleID { get; set; }
-        public Article  Article { get; set; }
-
-        public string Deneme { get; set; }
+        public Article  Article { get; set; } 
 
     }
 }

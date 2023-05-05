@@ -45,10 +45,12 @@ namespace Blog.Web.Areas.Member.Controllers
             _commentRepository = commentRepository;
             _likeRepository= likeRepository;
         }
-        public IActionResult ArticleDetail(int id, string sayfa)
+        public async Task<IActionResult> ArticleDetail(int id, string sayfa = "user")
         {
+            Appuser appuser = await _userManager.GetUserAsync(User);
             ViewBag.ArticleId = id;
             ViewBag.Sayfa = sayfa;
+            ViewBag.SessionUserID = appuser.Id;
             return View();
         }
         public IActionResult AddToComment(CreateCommentVM createCommentVm)
