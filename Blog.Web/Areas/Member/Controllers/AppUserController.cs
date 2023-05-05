@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Blog.Model.Entities.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -74,7 +75,8 @@ namespace Blog.Web.Areas.Member.Controllers
 
                 if ( dto.Image!=null)
                 {
-                    System.IO.File.Delete($"wwwroot/{updateUser.ImagePath}");
+                    if(!String.IsNullOrEmpty(updateUser.ImagePath)) 
+                        System.IO.File.Delete($"wwwroot/{updateUser.ImagePath}");
                     using var image = Image.Load(dto.Image.OpenReadStream());
                     image.Mutate(a => a.Resize(80, 80));
                     image.Save($"wwwroot/images/{dto.UserName}.jpg");
