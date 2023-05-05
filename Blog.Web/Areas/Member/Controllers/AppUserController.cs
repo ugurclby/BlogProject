@@ -74,6 +74,7 @@ namespace Blog.Web.Areas.Member.Controllers
 
                 if ( dto.Image!=null)
                 {
+                    System.IO.File.Delete($"wwwroot/{updateUser.ImagePath}");
                     using var image = Image.Load(dto.Image.OpenReadStream());
                     image.Mutate(a => a.Resize(80, 80));
                     image.Save($"wwwroot/images/{dto.UserName}.jpg");
