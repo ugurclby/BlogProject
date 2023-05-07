@@ -50,6 +50,7 @@ namespace Blog.Web.Areas.Member.Controllers
 
         public async Task<IActionResult> Update()
         {
+            //Sisteme giriş yapmış kullanıcının bilgileri appuser değişkenine alınır
             Appuser appuser = await _userManager.GetUserAsync(User); 
             var register= _mapper.Map<RegisterUpdateDTO>(appuser); 
             return View(register);
@@ -57,6 +58,7 @@ namespace Blog.Web.Areas.Member.Controllers
         [HttpPost]
         public IActionResult Update(RegisterUpdateDTO dto)
         {
+            // şifre değişti mi değişkeni
             bool isChangedPass=false;
             
             if (ModelState.IsValid)
@@ -82,11 +84,13 @@ namespace Blog.Web.Areas.Member.Controllers
                  
                 updateUser.FirstName = dto.FirstName;
                 updateUser.LastName = dto.LastName;
-                updateUser.UserName = dto.UserName; 
+                updateUser.UserName = dto.UserName;
+                updateUser.NormalizedUserName = dto.UserName.ToUpper();
                 updateUser.Email = dto.Email;
-                
+                updateUser.NormalizedEmail = dto.Email.ToUpper();
+
                 //Şifre değişikliğinde hash yapılmadığı için sadece password alanı değişiyordu. bu yüzden login de şifre hatası veriyordu.
-                PasswordHasher<Appuser> ph = new PasswordHasher<Appuser>(); 
+                PasswordHasher <Appuser> ph = new PasswordHasher<Appuser>(); 
                 updateUser.PasswordHash = ph.HashPassword(updateUser, dto.Password);
 
                 //Eğer bir şifre değiştirme işlemi olduysa son 3 şifreden farklı olması kontrolüne girilir.

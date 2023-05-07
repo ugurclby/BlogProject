@@ -47,6 +47,7 @@ namespace Blog.Web.Controllers
 
                 var errors = await _appUserRepository.Create(appuser);
                 
+                // Hata varsa bu kod bloğu çalışır ekrana hata döner.
                 if (errors.Count > 0)
                 {
                     foreach (var error in errors)
@@ -55,6 +56,8 @@ namespace Blog.Web.Controllers
                     }
                     return View(dto);
                 }
+
+                // Şifrelerin tutulduğu tabloya yeni kullanıcının şifresi insert edildi.
                 _usedPasswordRepository.Create(new UsedPassword()
                 {
                     AppUserID = appuser.Id,
@@ -77,7 +80,9 @@ namespace Blog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Email kullanıcı tablosunda var mı kontrolü
                 Appuser appuser = await _userManager.FindByEmailAsync(dto.Email);
+
                 if (appuser != null)
                 {
                     if (appuser.Statu == Statu.Confirmation)
@@ -95,6 +100,7 @@ namespace Blog.Web.Controllers
                         SignInResult result = await _signInManager.PasswordSignInAsync(appuser.UserName, dto.Password, false, false);
                         if (result.Succeeded)
                         {
+                            // Kullanıcının rolleri çekilir , hangi role bağlıysa ilgili ekrana yönlendirilir.
                             var roles = await _userManager.GetRolesAsync(appuser);
 
                             if (roles.Contains("admin"))

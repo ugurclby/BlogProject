@@ -13,8 +13,7 @@ namespace Blog.Dal.Context
     public class ProjectContext : IdentityDbContext<Appuser>
     {
         public ProjectContext(DbContextOptions<ProjectContext> options) : base(options) { }
-
-
+         
         public DbSet<Article> Articles { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ArticleCategory> ArticleCategories { get; set; }
@@ -24,12 +23,11 @@ namespace Blog.Dal.Context
         public DbSet<About> Abouts { get; set; }
         public DbSet<UserFollowedCategory> UserFollowedCategories { get; set; }
         public DbSet<UsedPassword> UsedPasswords { get; set; }
-        
-        
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
-        {
-            
+        { 
 
             builder.ApplyConfiguration(new ArticleMap());
             builder.ApplyConfiguration(new AppUserMap());
@@ -42,7 +40,7 @@ namespace Blog.Dal.Context
             builder.ApplyConfiguration(new UsedPasswordMap());
 
             string adminId = Guid.NewGuid().ToString();
-            string roleId = Guid.NewGuid().ToString();
+            string adminRoleId = Guid.NewGuid().ToString();
 
             //admin rol ve member rol atanır
             // IdentityRoleMap altından alınmasının sebebi rolün ardından admin kullanıcısı oluşacağı için roleId ihtiyacı vardı. 
@@ -50,7 +48,7 @@ namespace Blog.Dal.Context
             {
                 Name = "admin",
                 NormalizedName = "ADMIN",
-                Id = roleId
+                Id = adminRoleId
             }, new IdentityRole
             {
                 Name = "member",
@@ -63,8 +61,7 @@ namespace Blog.Dal.Context
             var appUser = new Appuser
             {
                 Id = adminId,
-                Email = "admin@gmail.com",
-                EmailConfirmed = true,
+                Email = "admin@gmail.com", 
                 FirstName = "admin",
                 LastName = "admin",
                 UserName = "admin@gmail.com",
@@ -74,23 +71,23 @@ namespace Blog.Dal.Context
                 Password = "admin123"
             };
 
-            //admin şifresi verilir
+            //admin hash şifresi verilir
             PasswordHasher<Appuser> ph = new PasswordHasher<Appuser>();
             appUser.PasswordHash = ph.HashPassword(appUser, "admin123");
-
+             
             //admin insert edilir
             builder.Entity<Appuser>().HasData(appUser);
 
             //admin ve rolü insert edilir
             builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
-                RoleId = roleId,
+                RoleId = adminRoleId,
                 UserId = adminId
             });
 
 
             base.OnModelCreating(builder);
-             
-        } 
+
+        }
     }
 }

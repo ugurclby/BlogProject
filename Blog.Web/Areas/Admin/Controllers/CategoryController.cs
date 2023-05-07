@@ -62,6 +62,11 @@ namespace Blog.Web.Areas.Admin.Controllers
 
             return View(categoryListDtos);
         }
+        /// <summary>
+        /// Kategorilerimin onaylandığı yer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult CategoryApproval(int id)
         {
             var category =  _categoryRepository.GetDefault(category => category.ID == id);

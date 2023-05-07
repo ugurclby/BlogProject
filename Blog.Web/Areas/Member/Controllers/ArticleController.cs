@@ -87,13 +87,13 @@ namespace Blog.Web.Areas.Member.Controllers
         [HttpPost]
         public IActionResult Create(CreateArticleVM vm)
         {
+            // Makalenin ilk oluşuturulduğu metod
             if (ModelState.IsValid)
             {
                 Article article = _mapper.Map<Article>(vm);
                 List<ArticleCategory> articleCategories = new List<ArticleCategory>();
 
-                using var image = Image.Load(vm.Image.OpenReadStream());
-
+                using var image = Image.Load(vm.Image.OpenReadStream()); 
                 image.Mutate(a => a.Resize(80, 80));
                 Guid guid = Guid.NewGuid();
                 image.Save($"wwwroot/images/{guid}.jpg");
@@ -101,7 +101,7 @@ namespace Blog.Web.Areas.Member.Controllers
 
                 article.ReadTime = (vm.Content.Length / 100) * 2;
 
-                if (vm.CategoryID.Length > 0)
+                if (vm.CategoryID.Length > 0) // Ekran üzerinden seçilen kategoriler. Bu if ile kontrol edilir. KAtegori seçimi varsa Article sınıfı içerisindeki ArticleCategories değişkenine atılır.
                 {
                     foreach (var categoryId in vm.CategoryID)
                     {
@@ -114,7 +114,7 @@ namespace Blog.Web.Areas.Member.Controllers
             }
 
             // toDo:vm nesnesi üzerinde doldurulması greken alanlar var. aksi takdirde category seçimi yapılamaz. +
-
+            // CreateArticleVM ekrana geri gönderilirken içerisindeki Categories lsitesinin dolumu aşağıdaki kod ile yapılır. Bu sayede ekran hata vermez.
             vm.Categories = _categoryRepository.GetByDefaults
             (
                 selector: a => new SelectListItem() { Text = a.Name, Value = a.ID.ToString() },
@@ -126,6 +126,7 @@ namespace Blog.Web.Areas.Member.Controllers
 
         public async Task<IActionResult> List()
         {
+            // Sadece kullanıcının kendi yazmış olduğu makaleler listelenir
             Appuser appuser = await _userManager.GetUserAsync(User);
 
             var list = _articleRepository.GetByDefaults
@@ -165,16 +166,22 @@ namespace Blog.Web.Areas.Member.Controllers
 
                 var articlefromDatabase = _articleRepository.GetByDefault(article1 => article1, article1 => article1.ID == vm.ID, article1 => article1.Include(a => a.ArticleCategories));
 
+                // Eskiden seçilmiş olan ara tablodaki kategorileri getirdim.
                 var existingIds = articlefromDatabase.ArticleCategories.Select(x => x.CategoryID).ToList();
 
+                //Ekran üzerinden seçilen yeni kategorilerim
                 var selectedIds = vm.CategoryID.ToList();
 
+                // Seçilen yeni kategorilerin içerisinde eşleşmeyenleri getir. Except framework kütüphanesidir.
                 var toAdd=selectedIds.Except(existingIds).ToList();
 
+                // Var olan kategorilerin içerisinde ekran üzerinden gelmyen kayıtları getir.
                 var toRemove=existingIds.Except(selectedIds).ToList();
 
+                // Öncelikle ara tablodan silinecek olan kayıtlar silinir
                 articlefromDb.ArticleCategories=articlefromDatabase.ArticleCategories.Where(x=>!toRemove.Contains(x.CategoryID)).ToList();
 
+                // Ardından ara tabloya ekelencek olan kayıtlar eklenir.
                 foreach (var item in toAdd)
                 {
                     articlefromDb.ArticleCategories.Add(new ArticleCategory(){ArticleID = vm.ID,CategoryID = item});
@@ -182,21 +189,20 @@ namespace Blog.Web.Areas.Member.Controllers
 
                 if (vm.Image != null)
                 {
+                    if (!String.IsNullOrEmpty(articlefromDb.ImagePath))
+                    {
+                        System.IO.File.Delete($"wwwroot/{articlefromDb.ImagePath}"); // hazır kod
+                    } 
+
                     using var image = Image.Load(vm.Image.OpenReadStream());
-                    image.Mutate(a => a.Resize(80, 80));
-
+                    image.Mutate(a => a.Resize(80, 80)); 
                     Guid guid = Guid.NewGuid();
-                    image.Save($"wwwroot/images/{guid}.jpeg");
-
-                    articlefromDb.ImagePath = $"/images/{guid}.jpeg";
-
-                    System.IO.File.Delete($"wwwroot/{vm.ImagePath}");
-
+                    image.Save($"wwwroot/images/{guid}.jpeg");  
+                    articlefromDb.ImagePath = $"/images/{guid}.jpeg"; 
                 }
 
                 articlefromDb.Title = vm.Title;
-                articlefromDb.Content = vm.Content;
-                articlefromDb.ImagePath = vm.ImagePath;
+                articlefromDb.Content = vm.Content; 
                 articlefromDb.ReadTime = (vm.Content.Length / 100) * 2;
                 _articleRepository.Update(articlefromDb);
                

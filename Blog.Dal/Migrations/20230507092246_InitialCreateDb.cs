@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Blog.Dal.Migrations
 {
-    public partial class db : Migration
+    public partial class InitialCreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -355,22 +355,22 @@ namespace Blog.Dal.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "4e282e3f-ab21-4b66-9331-dd47810fb32a", "0b7946f0-f34f-4153-91d4-6578e9740f1a", "admin", "ADMIN" });
+                values: new object[] { "0cdf5dd3-e034-4af3-b500-210eb524db43", "bb812d84-ed65-4c32-a092-9e95665a4772", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "6f9097b9-cac0-4232-bdfa-59f79750c909", "511e4d13-15c4-4225-a3ce-37c632be5726", "member", "MEMBER" });
+                values: new object[] { "9a704826-fd3f-459a-b6da-d6c308fd2de8", "f9344534-1e8d-4934-9ae0-9328afd4b8b7", "member", "MEMBER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedDate", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "Password", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Statu", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "6dd80c18-54ec-44e1-9e1d-26ff7e7223d8", 0, "5f415ea1-0b11-44e8-bdde-f56250c32019", new DateTime(2023, 5, 5, 15, 6, 17, 509, DateTimeKind.Local).AddTicks(8037), "admin@gmail.com", true, "admin", null, "admin", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "admin123", "AQAAAAEAACcQAAAAELYh44YQTOQ3hGdrrf/3+0pk6ttkKlYsi0DkstAQNNELvEKU3v2xQOhCbanQ/IyWkA==", null, false, "21338b0b-db12-43b8-9553-010aec3bdd78", 1, false, "admin@gmail.com" });
+                values: new object[] { "5255e51f-7152-4190-822c-0caf7ab4b9b7", 0, "566e715b-0df5-4864-ac0b-4d8e265e4dee", new DateTime(2023, 5, 7, 12, 22, 46, 244, DateTimeKind.Local).AddTicks(6567), "admin@gmail.com", false, "admin", null, "admin", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "admin123", "AQAAAAEAACcQAAAAEBlDMHaF3LC0y22n6qGpomi1siOg7cL3EynQT7AfIgPeawdMHVyKR5XaEYRCR7bSkw==", null, false, "b232a534-5ae2-4e08-931d-e6c5e8990d5b", 1, false, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "6dd80c18-54ec-44e1-9e1d-26ff7e7223d8", "4e282e3f-ab21-4b66-9331-dd47810fb32a" });
+                values: new object[] { "5255e51f-7152-4190-822c-0caf7ab4b9b7", "0cdf5dd3-e034-4af3-b500-210eb524db43" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleCategories_CategoryID",

@@ -66,7 +66,7 @@
                             <form method="post" asp-action="AddToComment" class="mb-4">
                                 <div class="form-group">
                                     <textarea name="Text" class="form-control" rows="4" placeholder="Yorum Yaz.."></textarea>
-                                    <input type="hidden" name="AppUserID" value="@Model.AppUserID" />
+                                    <input type="hidden" name="AppUserID" value="@ViewBag.CurrentAppUserID" />
                                     <input type="hidden" name="ArticleID" value="@Model.ID" />
                                 </div>
                                 <div class="form-group mt-2">

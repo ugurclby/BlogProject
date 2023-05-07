@@ -13,7 +13,7 @@ namespace Blog.Model.TypeConfigurations.Concrete
 
         public override void Configure(EntityTypeBuilder<Category> builder)
         { 
-            builder.HasMany(a => a.ArticleCategories).WithOne(b => b.Category).HasForeignKey(c => c.CategoryID).OnDelete(DeleteBehavior.Restrict); ;
+            builder.HasMany(a => a.ArticleCategories).WithOne(b => b.Category).HasForeignKey(c => c.CategoryID).OnDelete(DeleteBehavior.Restrict);
              
             base.Configure(builder);
         }

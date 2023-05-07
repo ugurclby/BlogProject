@@ -1,7 +1,5 @@
 ﻿using Blog.Model.Entities.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Blog.Dal.Repositories.Interfaces.Concrete
@@ -13,6 +11,7 @@ namespace Blog.Dal.Repositories.Interfaces.Concrete
         void Delete(Appuser appuser); 
         int Update(Appuser appuser);
         int UpdateApproval(Appuser appuser);  
+        // Onay bekleyen kullanıcı listesini verir
         List<Appuser> OnayBekleyenKullaniciListesi(); 
         Appuser GeAppUserById(string appUserId);
     }

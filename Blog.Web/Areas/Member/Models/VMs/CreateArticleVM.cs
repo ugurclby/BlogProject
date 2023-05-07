@@ -26,7 +26,7 @@ namespace Blog.Web.Areas.Member.Models.VMs
         [Required(ErrorMessage = "Kategori seçmelisiniz.")]
         [Display(Name = "Kategoriler")]
         public int[] CategoryID { get; set; }
-        public List<SelectListItem> Categories { get; set; }
+        public List<SelectListItem> Categories { get; set; } // Ekran üzerindeki kategoriler alannı selectlist item üzerinden okunması için yapıldı.
 
 
         //[Required(ErrorMessage = "Kategori seçmelisiniz.")]

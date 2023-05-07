@@ -26,6 +26,7 @@ namespace Blog.Web.Views.Shared.Components.ArticleDetail
                 articles =>articles.Include(z=>z.Comments).ThenInclude(i=>i.Appuser).
                     Include(t=>t.Likes).ThenInclude(u=>u.Appuser).
                     Include(x=>x.ArticleCategories).ThenInclude(y=>y.Category)).FirstOrDefault();
+            // Okunma Sayısı her ekran açıldığında update edilir.
             article.ReadCount += 1;
             _articleRepository.Update(article);
             ViewBag.Sayfa= sayfa;

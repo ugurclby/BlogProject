@@ -48,8 +48,14 @@ namespace Blog.Web.Areas.Admin.Controllers
             return View(getConfirmationList);
         }
          
+        /// <summary>
+        /// Kullanıcı onaylanan metod
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> UserApproval(string id)
         {
+            // kullanıcı kontrolü yapılır. Eğer kullanıcı varsa statü kolonu aktif edilir.
             var appUser= await _userManager.FindByIdAsync(id);
             if (appUser!=null)
             {

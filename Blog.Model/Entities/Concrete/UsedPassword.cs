@@ -9,6 +9,7 @@ using Blog.Model.Entities.Abstract;
 
 namespace Blog.Model.Entities.Concrete
 {
+    // Kullanınıcın şifrelerinin tutulduğu tablo
     public class UsedPassword : BaseEntity
     {
         public string PasswordHash { get; set; }

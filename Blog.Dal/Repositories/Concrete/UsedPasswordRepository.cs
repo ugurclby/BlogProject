@@ -23,7 +23,8 @@ namespace Blog.Dal.Repositories.Concrete
                 selector: a => new UsedPassword() {PasswordHash = a.PasswordHash, AppUserID = a.AppUserID},
                 expression: a => a.AppUserID== user.Id
             );
-            
+            // Kullanıcının önceki şifreleri ile yeni şifresi karşılaştırılır. Eğer eski şifrelerden biri yeni şifre ile eşleşiyorsa
+            // Bu fonksiyon true döner (yani bu şifreyi daha önce kullandın)
             return userPassword.OrderByDescending(up => up.CreatedDate)
                 .Select(up => up.PasswordHash).Take(UsedPasswordLimit).Any(x => new PasswordHasher<Appuser>().VerifyHashedPassword(user,x, newPassword) != PasswordVerificationResult.Failed);
              

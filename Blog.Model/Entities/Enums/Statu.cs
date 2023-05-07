@@ -6,6 +6,6 @@
         Active,
         Modified,
         Passive,
-        Rejection
+        Rejection // Admin tarafından reddedilen işlemler için eklendi
     }
 }

@@ -39,6 +39,9 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public IActionResult About(AboutDTO aboutDto)
         {
+            //iletişim formu kayıt süreci
+            // İletişim formları da statüsü 0 olarak atılır. Çünkü admin sayfasına düşürülür. 
+            //Admin ilgili kaydı okuduktan sonra aktife çekilir ve admin sayfasından geri alınır.
             if (ModelState.IsValid)
             {
                 _aboutRepository.Create(_mapper.Map<About>(aboutDto));

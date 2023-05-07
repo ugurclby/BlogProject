@@ -34,6 +34,7 @@ namespace Blog.Dal.Repositories.Concrete
 
             var appUserResult = await _userManager.CreateAsync(appuser, appuser.Password);
 
+            // Db tarafında duplicate hataları dönerse burada yakalayıp liste ile geri dönüyoruz.
             if (!appUserResult.Succeeded)
             {
                 foreach (var error in appUserResult.Errors)
@@ -56,13 +57,12 @@ namespace Blog.Dal.Repositories.Concrete
         //Dönüş tipi int verilmesinin sebebi başarılı update olup olmadığının kontrolü yapılması gerekmektedir. Çünkü şifre değişikliğinde usedpass tablosuna insert atılmalıdır. 
         public int Update(Appuser appuser)
         {
-
-            //await _userManager.UpdateAsync(appuser); 
             //// todo: usermanager.update ??
+            //await _userManager.UpdateAsync(appuser);  
             ///  _userManager.UpdateAsync(appuser);  metodu ile de update işlemi yapılabiliyor. Fakat içinde bulunduğumuz update metodu async metod olmak zorunda ve db context üzerinden işlem yapamdığımız için savechanges kendi yapar.
             /// O kod buradan kalkar. Sadece bu kod olur : _userManager.UpdateAsync(appuser);
             /// Ayrıca EF üzerinden yapılan update işlemlerinde EF devamlı _table nesnesi üzerinden tabloları üzerinde tuttuğu için bir dml metodu çağırmadan bu kod ile de _table.Update(appuser); işlem yapılabilir. 
-
+            
             appuser.Statu = Model.Entities.Enums.Statu.Modified;
             _table.Update(appuser);
             return _projectContext.SaveChanges();
