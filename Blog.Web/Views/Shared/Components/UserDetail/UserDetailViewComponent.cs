@@ -1,9 +1,5 @@
 ﻿using Blog.Dal.Repositories.Interfaces.Concrete;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-
-
+using Microsoft.AspNetCore.Mvc; 
 namespace Blog.Web.Views.Shared.Components.UserDetail
 {
     public class UserDetailViewComponent : ViewComponent

@@ -23,7 +23,24 @@ namespace Blog.Dal.Repositories.Concrete
         }
 
         public List<CategoryFilterDto> GetCategoriesWithArticleCount()
-        {  
+        {
+            // Çalışan Sql sorgu :
+            //SELECT DISTINCT [c].[ID] AS[CategoryId],
+            //                [c].[Name] AS[CategoryName],
+            //                [c].[Statu] AS[CategoryStatu],
+            //           ( SELECT COUNT(*)
+            //               FROM [ArticleCategories] AS[a]
+            //              INNER JOIN [Articles] AS[a0] ON[a].[ArticleID] = [a0].[ID]
+            //              WHERE ([a].[CategoryID] = [c].[ID]) AND (([a0].[Statu] = 1) OR([a0].[Statu] = 2))) AS[ArticleCount]
+            //FROM[ArticleCategories] AS[a1]
+            //INNER JOIN[Categories] AS[c] ON[a1].[CategoryID] = [c].[ID]
+            //INNER JOIN[Articles] AS[a2] ON[a1].[ArticleID] = [a2].[ID]
+            //WHERE(([c].[Statu] = 1) OR([c].[Statu] = 2))
+            //  AND(( SELECT COUNT(*)
+            //         FROM[ArticleCategories] AS[a3]
+            //   INNER JOIN[Articles] AS[a4] ON[a3].[ArticleID] = [a4].[ID]
+            //        WHERE([a3].[CategoryID] = [c].[ID]) AND(([a4].[Statu] = 1) OR([a4].[Statu] = 2))) > 0)
+             
             var categoryFilters = _projectContext.ArticleCategories
                 .Join(
                     _projectContext.Categories,
@@ -54,6 +71,21 @@ namespace Blog.Dal.Repositories.Concrete
 
         public List<FollowCategoryFilterDto> GetCategoriesWithNoArticleCount(string CategoryAppUserId)
         {
+            //SELECT DISTINCT[u].[AppUserID] AS[AppUserId], 
+            //[c].[ID] AS[CategoryId], 
+            //[c].[Name] AS[CategoryName], 
+            //[c].[Statu] AS[CategoryStatu], 
+            //(SELECT COUNT(*) 
+            //FROM[ArticleCategories] AS[a]  
+            //INNER JOIN[Articles] AS[a0] ON[a].[ArticleID] = [a0].[ID] 
+            //WHERE([a].[CategoryID] = [c].[ID]) 
+            //AND(([a0].[Statu] = 1) OR([a0].[Statu] = 2))) AS[ArticleCount]
+            //FROM[ArticleCategories] AS[a1]
+            //INNER JOIN[Categories] AS[c] ON[a1].[CategoryID] = [c].[ID]
+            //INNER JOIN[UserFollowedCategories] AS[u] ON[c].[ID] = [u].[CategoryID]
+            //INNER JOIN[Articles] AS[a2] ON[a1].[ArticleID] = [a2].[ID]
+            //WHERE(([c].[Statu] = 1) OR([c].[Statu] = 2)) AND([u].[AppUserID] =@CategoryAppUserId )
+
             var categoryFilters = _projectContext.ArticleCategories
                 .Join(
                     _projectContext.Categories,

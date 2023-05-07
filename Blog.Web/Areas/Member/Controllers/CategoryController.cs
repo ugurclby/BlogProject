@@ -1,21 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Blog.Dal.Repositories.Interfaces.Concrete;
 using Blog.Model.Entities.Concrete;
+using Blog.Model.Entities.Enums;
 using Blog.Web.Areas.Member.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Blog.Model.Entities.Enums;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blog.Web.Areas.Member.Controllers
 {
     [Area("Member")]
-    [Authorize(Roles = "member")]
-
+    [Authorize(Roles = "member")] 
     public class CategoryController : Controller
     {
         private readonly IMapper _mapper;

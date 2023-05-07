@@ -2,14 +2,10 @@
 @model Article
 <div class="container mt-5">
     <div class="row">
-        <div class="col-lg-8 offset-2">
-            <!-- Post content-->
-            <article>
-                <!-- Post header-->
-                <header class="mb-4">
-                    <!-- Post title-->
-                    <h1 class="fw-bolder mb-1">@Model.Title</h1>
-                    <!-- Post meta content-->
+        <div class="col-lg-8 offset-2"> 
+            <article> 
+                <header class="mb-4"> 
+                    <h1 class="fw-bolder mb-1">@Model.Title</h1> 
                     <div class="row text-muted fst-italic mb-2">
                         <div class="col-md-6">
                             Yayınlanma Tarihi , @Model.CreatedDate.ToShortDateString()
@@ -17,16 +13,13 @@
                         <div class="col-md-6">
                             <span class="float-right">  Okunma Süresi , @Model.ReadTime dk</span>
                         </div>
-                    </div>
-                    <!-- Post categories-->
+                    </div> 
                     @foreach (var category in Model.ArticleCategories.Select(x => x.Category))
                     {
                         <a class="badge bg-secondary text-decoration-none link-light" href="#!">@category.Name</a>
                     }
-                </header>
-                <!-- Preview image figure-->
-                <figure class="mb-4"><img class="img-fluid rounded" src="@Model.ImagePath" alt="..." /></figure>
-                <!-- Post content-->
+                </header> 
+                <figure class="mb-4"><img class="img-fluid rounded" src="@Model.ImagePath" alt="..." /></figure> 
                 <section class="mb-2">
                     <div class="form-group">
                         <label asp-for="Content"></label>
@@ -66,12 +59,10 @@
                 </div>
             </article>
             @if (ViewBag.Sayfa == "user")
-            {
-                <!-- Comments section-->
+            { 
                 <section class="mb-5">
                     <div class="card bg-light">
-                        <div class="card-body">
-                            <!-- Comment form-->
+                        <div class="card-body"> 
                             <form method="post" asp-action="AddToComment" class="mb-4">
                                 <div class="form-group">
                                     <textarea name="Text" class="form-control" rows="4" placeholder="Yorum Yaz.."></textarea>
@@ -81,8 +72,7 @@
                                 <div class="form-group mt-2">
                                     <input type="submit" class="btn btn-success" value="Gönder" />
                                 </div>
-                            </form> 
-
+                            </form>  
                             @foreach (var comment in Model.Comments)
                             {
                                 <div class="d-flex">
@@ -96,7 +86,6 @@
                     </div>
                 </section>
             }
-        </div>
-
+        </div> 
     </div>
 </div>

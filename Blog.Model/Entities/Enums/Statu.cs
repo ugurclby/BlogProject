@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Blog.Model.Entities.Enums
+﻿namespace Blog.Model.Entities.Enums
 {
     public enum Statu
-    {
-        //Admin Onayına sunulması için eklendi
-        Confirmation=0, 
+    { 
+        Confirmation=0, //Admin Onayına sunulması için eklendi
         Active,
         Modified,
         Passive,

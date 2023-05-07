@@ -1,28 +1,21 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
+using Blog.Dal.Repositories.Interfaces.Concrete;
 using Blog.Model.Entities.Concrete;
+using Blog.Model.Entities.Enums;
+using Blog.Web.Areas.Admin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Blog.Web.Models.DTOs;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
-using Blog.Dal.Repositories.Interfaces.Concrete;
-using Blog.Dal.Repositories.Concrete;
-using Blog.Web.Areas.Admin.Models;
+using System.Collections.Generic;
 using System.Linq;
-using Blog.Model.Entities.Enums;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using System.IO; 
+using System.Threading.Tasks;
 
 namespace Blog.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class AppUserController : Controller
-    {
-  
+    { 
         private readonly UserManager<Appuser> _userManager;
         private readonly IMapper _mapper;
         private readonly IAppUserRepository _appUserRepository;

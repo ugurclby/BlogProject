@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using Blog.Dal.Repositories.Interfaces.Concrete;
+using Blog.Model.Entities.Concrete;
 using Blog.Web.Models;
+using Blog.Web.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Blog.Model.Entities.Concrete;
-using Blog.Web.Models.DTOs;
 
 namespace Blog.Web.Controllers
 {
@@ -24,9 +20,9 @@ namespace Blog.Web.Controllers
             _mapper = mapper;
             _aboutRepository = aboutRepository;
         }
-
+        
         public IActionResult Index(int? categoryId)
-        {
+        { 
             ViewBag.CategoryId = 0;
             if (categoryId.HasValue)
             {

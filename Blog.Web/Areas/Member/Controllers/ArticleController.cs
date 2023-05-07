@@ -1,30 +1,26 @@
-﻿using Blog.Dal.Repositories.Interfaces.Concrete;
+﻿using AutoMapper;
+using Blog.Dal.Repositories.Interfaces.Concrete;
 using Blog.Model.Entities.Concrete;
+using Blog.Model.Entities.Enums;
+using Blog.Web.Areas.Member.Models;
 using Blog.Web.Areas.Member.Models.VMs;
+using Blog.Web.Models.VMs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Blog.Web.Areas.Member.Models;
-using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Blog.Model.Entities.Enums;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 using System.Linq;
-using Blog.Dal.Context;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Blog.Dal.Repositories.Concrete;
-using Blog.Web.Models.VMs;
+using System.Threading.Tasks;
 
 namespace Blog.Web.Areas.Member.Controllers
 {
     [Area("Member")]
-    [Authorize]
+    [Authorize(Roles = "member")]
     public class ArticleController : Controller
     {
         private readonly UserManager<Appuser> _userManager;
@@ -134,7 +130,7 @@ namespace Blog.Web.Areas.Member.Controllers
 
             var list = _articleRepository.GetByDefaults
                 (
-                    selector: a => new GetArticleDTO() { ArticleID = a.ID, ImagePath = a.ImagePath, Title = a.Title },
+                    selector: a => new GetArticleDTO() { ArticleID = a.ID, ImagePath = a.ImagePath, Title = a.Title, StatuDescription=a.StatuDescription },
                     expression: a => a.Statu != Statu.Passive && a.AppUserID == appuser.Id,
                     include: a => a.Include(a => a.ArticleCategories)
 

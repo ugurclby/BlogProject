@@ -1,0 +1,32 @@
+﻿@model List<About> 
+<div class="card col-md-12 mt-5">
+    <div class="card-body">
+        <div class="card-text"> <h3>İletişim Formu Listesi</h3></div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Ad Soyad</th>
+                <th>E-Mail</th>
+                <th>Konu</th> 
+                <th>Oluşturulma Tarihi</th> 
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.AdSoyad</td>
+                    <td>@item.Email</td>
+                    <td>@item.Konu</td> 
+                    <td>@item.CreatedDate</td> 
+                    <td>
+                            <a asp-action="AboutDetail" asp-route-id="@item.ID" class="btn btn-info btn-sm">İncele</a>
+                    </td> 
+                </tr>
+            } 
+            </tbody>
+        </table>
+
+    </div>
+</div>

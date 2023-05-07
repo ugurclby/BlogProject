@@ -1,19 +1,16 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
+using Blog.Dal.Repositories.Interfaces.Concrete;
 using Blog.Model.Entities.Concrete;
+using Blog.Model.Entities.Enums;
+using Blog.Web.Areas.Member.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Blog.Web.Models.DTOs;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
-using Blog.Dal.Repositories.Interfaces.Concrete;
-using Blog.Dal.Repositories.Concrete;
-using Blog.Web.Areas.Member.Models;
+using System;
 using System.Linq;
-using Blog.Model.Entities.Enums;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
+using System.Threading.Tasks;
 
 namespace Blog.Web.Areas.Member.Controllers
 {
@@ -41,8 +38,8 @@ namespace Blog.Web.Areas.Member.Controllers
             ViewBag.CategoryAppUserId = appuser.Id;
             if (categoryId.HasValue)
             {
-                ViewBag.CategoryId = categoryId.Value;
-             }
+                ViewBag.CategoryId = categoryId;
+            }
             return View();
         }
         public async Task<IActionResult> LogOut()
@@ -53,8 +50,7 @@ namespace Blog.Web.Areas.Member.Controllers
 
         public async Task<IActionResult> Update()
         {
-            Appuser appuser = await _userManager.GetUserAsync(User);
-            
+            Appuser appuser = await _userManager.GetUserAsync(User); 
             var register= _mapper.Map<RegisterUpdateDTO>(appuser); 
             return View(register);
         }
@@ -64,8 +60,7 @@ namespace Blog.Web.Areas.Member.Controllers
             bool isChangedPass=false;
             
             if (ModelState.IsValid)
-            {
-
+            { 
                 var updateUser = _userManager.Users.FirstOrDefault(I => I.Id == dto.Id);
 
                 //Kullanıcının silme butonuna bastığını yakalamak için yapıldı.
@@ -119,12 +114,11 @@ namespace Blog.Web.Areas.Member.Controllers
                 ViewBag.Message = "Kayıt Başarılı Bir Şekilde Güncellendi";
             }
             return View(dto);
-        }
+        } 
         public IActionResult UserDetail(string appUserId)
         {
             ViewBag.AppUserId = appUserId;
             return View();
-        }
-
+        } 
     }
 }

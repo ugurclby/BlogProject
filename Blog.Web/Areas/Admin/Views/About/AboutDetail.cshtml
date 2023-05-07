@@ -1,0 +1,26 @@
+﻿@model About 
+<div class="card col-md-8 offset-2 mt-5">
+    <div class="card-body">
+        <div class="card-text">
+            <h3>İletişim Formu</h3>
+        </div>
+        <form>
+            <div class="form-group">
+                <label asp-for="AdSoyad"></label>
+                <input type="text" class="form-control" asp-for="AdSoyad" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input type="text" class="form-control" asp-for="Email" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Konu"></label>
+                <input type="text" class="form-control" asp-for="Konu" disabled="disabled" />
+            </div> 
+            <div class="form-group">
+                <label asp-for="Aciklama"></label>
+                <textarea asp-for="Aciklama" class="form-control" rows="4" disabled="disabled"></textarea> 
+            </div>
+        </form>
+    </div>
+</div> 

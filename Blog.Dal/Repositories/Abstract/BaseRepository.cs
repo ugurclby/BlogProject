@@ -70,9 +70,12 @@ namespace Blog.Dal.Repositories.Abstract
 
         public void Update(T entity)
         {
-            if (entity.Statu != Statu.Confirmation ) // Admin onayına giden bir obje , güncellendiği zaman statusu değişip onay sürecini atlamasın diye yazıldı.
+            if (entity.Statu != Statu.Confirmation && entity.Statu != Statu.Rejection) // Admin onayına giden bir obje , güncellendiği zaman statusu değişip onay sürecini atlamasın diye yazıldı.
             {
                 entity.Statu = Statu.Modified;
+            }else if (entity.Statu == Statu.Rejection)
+            {
+                entity.Statu = Statu.Confirmation; // Admin onayına düşüp, adminin reddettiği bir makale yazar tarafından güncellenirse tekrar admin onayına düşmesi sağlanır.
             } 
             _table.Update(entity); 
             _context.SaveChanges();

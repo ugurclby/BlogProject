@@ -1,6 +1,6 @@
 ﻿<div class="row">
     <div id="Dv_Article" class="col-lg-8">
-        @await Component.InvokeAsync("Articles",new{categoryId=(int)ViewBag.CategoryId,takeNumber=5})
+        @await Component.InvokeAsync("Articles",new{categoryId=(int)ViewBag.CategoryId,takeNumber=ArticleMaxList.Guest})
     </div>
     <div class="col-lg-4">
         @await Component.InvokeAsync("CategoryList")

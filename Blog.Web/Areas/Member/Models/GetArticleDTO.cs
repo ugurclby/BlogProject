@@ -1,4 +1,6 @@
-﻿namespace Blog.Web.Areas.Member.Models
+﻿using Blog.Model.Entities.Concrete;
+
+namespace Blog.Web.Areas.Member.Models
 {
     public class GetArticleDTO
     {
@@ -15,7 +17,7 @@
 
         public string CategoryName { get; set; }
 
-        
+        public string StatuDescription { get; set; }
 
     }
 }

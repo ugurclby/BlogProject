@@ -9,11 +9,7 @@ namespace Blog.Model.Entities.Concrete
 {
     public class About : BaseEntity
     {
-        public About()
-        {
-            Statu = Statu.Active;
-        } 
-        
+  
         public string AdSoyad { get; set; }
          
         public string Email { get; set; }
